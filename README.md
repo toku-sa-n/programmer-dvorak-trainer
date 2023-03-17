@@ -1,2 +1,1 @@
-# programmer-dvorak-trainer
-Practice the programmer dvorak layout
+# Programmer Dvorak keyboard layout trainer
