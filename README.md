@@ -1,1 +1,1 @@
-# Programmer Dvorak keyboard layout trainer
+# Programmer Dvorak trainer
