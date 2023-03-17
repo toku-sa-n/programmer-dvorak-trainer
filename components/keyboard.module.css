@@ -30,6 +30,10 @@
     padding-top: 17px;
 }
 
+.double-rows {
+    padding-top: 0;
+}
+
 .key:hover {
     border: 1px solid #eeeeee;
 }
