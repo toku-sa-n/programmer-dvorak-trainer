@@ -71,13 +71,13 @@ export default function Keyboard() {
                     &gt;
                     <br />.
                 </div>
-                <div className={styles.key}>P</div>
-                <div className={styles.key}>Y</div>
-                <div className={styles.key}>F</div>
-                <div className={styles.key}>G</div>
-                <div className={styles.key}>C</div>
-                <div className={styles.key}>R</div>
-                <div className={styles.key}>L</div>
+                <Key char="P" />
+                <Key char="Y" />
+                <Key char="F" />
+                <Key char="G" />
+                <Key char="C" />
+                <Key char="R" />
+                <Key char="L" />
                 <div className={`${styles.key} ${styles["double-rows"]}`}>
                     ?
                     <br />/
@@ -95,16 +95,16 @@ export default function Keyboard() {
                 <div className={`${styles.key} ${styles.capslock}`}>
                     CapsLock
                 </div>
-                <div className={styles.key}>A</div>
-                <div className={styles.key}>O</div>
-                <div className={styles.key}>E</div>
-                <div className={styles.key}>U</div>
-                <div className={styles.key}>I</div>
-                <div className={styles.key}>D</div>
-                <div className={styles.key}>H</div>
-                <div className={styles.key}>T</div>
-                <div className={styles.key}>N</div>
-                <div className={styles.key}>S</div>
+                <Key char="A" />
+                <Key char="O" />
+                <Key char="E" />
+                <Key char="U" />
+                <Key char="I" />
+                <Key char="D" />
+                <Key char="H" />
+                <Key char="T" />
+                <Key char="N" />
+                <Key char="S" />
                 <div className={`${styles.key} ${styles["double-rows"]}`}>
                     _
                     <br />-
@@ -116,15 +116,15 @@ export default function Keyboard() {
                     <br />
                     &#39;
                 </div>
-                <div className={styles.key}>Q</div>
-                <div className={styles.key}>J</div>
-                <div className={styles.key}>K</div>
-                <div className={styles.key}>X</div>
-                <div className={styles.key}>B</div>
-                <div className={styles.key}>M</div>
-                <div className={styles.key}>W</div>
-                <div className={styles.key}>V</div>
-                <div className={styles.key}>Z</div>
+                <Key char="Q" />
+                <Key char="J" />
+                <Key char="K" />
+                <Key char="X" />
+                <Key char="B" />
+                <Key char="M" />
+                <Key char="W" />
+                <Key char="V" />
+                <Key char="Z" />
                 <div className={`${styles.key} ${styles.rightshift}`}>
                     Shift
                 </div>
@@ -139,4 +139,8 @@ export default function Keyboard() {
             </div>
         </div>
     );
+}
+
+function Key({ char }: { char: string }) {
+    return <div className={styles.key}>{char}</div>;
 }
