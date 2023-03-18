@@ -1,7 +1,7 @@
 import { Press_Start_2P } from "next/font/google";
 import { useImmer } from "use-immer";
 import { enableMapSet } from "immer";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./keyboard.module.css";
 
 // The license for this class is at `/licenses/YYTypeScript`.
