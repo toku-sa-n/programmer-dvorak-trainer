@@ -5,72 +5,24 @@ export default function SingleKeyboard() {
     return (
         <div className={styles["keyboard-container"]}>
             <div className={styles["keyboard-base"]}>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    ~
-                    <br />$
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    %<br />&
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    7<br />[
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    5
-                    <br />
-                    &#123;
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    3
-                    <br />
-                    &#125;
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    1
-                    <br />(
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    9
-                    <br />=
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    0
-                    <br />*
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    2
-                    <br />)
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    4
-                    <br />+
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    6
-                    <br />]
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    8
-                    <br />!
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    `
-                    <br />#
-                </div>
+                <DoubleRowsKey upper="~" lower="$" />
+                <DoubleRowsKey upper="%" lower="&" />
+                <DoubleRowsKey upper="7" lower="[" />
+                <DoubleRowsKey upper="5" lower="&#123;" />
+                <DoubleRowsKey upper="3" lower="&#125;" />
+                <DoubleRowsKey upper="1" lower="(" />
+                <DoubleRowsKey upper="9" lower="=" />
+                <DoubleRowsKey upper="0" lower="*" />
+                <DoubleRowsKey upper="2" lower=")" />
+                <DoubleRowsKey upper="4" lower="+" />
+                <DoubleRowsKey upper="6" lower="]" />
+                <DoubleRowsKey upper="8" lower="!" />
+                <DoubleRowsKey upper="`" lower="#" />
                 <div className={`${styles.key} ${styles.delete}`}>Delete</div>
                 <div className={`${styles.key} ${styles.tab}`}>Tab</div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    :
-                    <br />;
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    &lt;
-                    <br />,
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    &gt;
-                    <br />.
-                </div>
+                <DoubleRowsKey upper=":" lower=";" />
+                <DoubleRowsKey upper="&lt;" lower="," />
+                <DoubleRowsKey upper="&gt;" lower="." />
                 <SingleKey char="P" />
                 <SingleKey char="Y" />
                 <SingleKey char="F" />
@@ -78,14 +30,8 @@ export default function SingleKeyboard() {
                 <SingleKey char="C" />
                 <SingleKey char="R" />
                 <SingleKey char="L" />
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    ?
-                    <br />/
-                </div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    ^
-                    <br />@
-                </div>
+                <DoubleRowsKey upper="?" lower="/" />
+                <DoubleRowsKey upper="^" lower="@" />
                 <div
                     className={`${styles.key} ${styles.backslash} ${styles["double-rows"]}`}
                 >
@@ -105,17 +51,10 @@ export default function SingleKeyboard() {
                 <SingleKey char="T" />
                 <SingleKey char="N" />
                 <SingleKey char="S" />
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    _
-                    <br />-
-                </div>
+                <DoubleRowsKey upper="_" lower="-" />
                 <div className={`${styles.key} ${styles.return}`}>Return</div>
                 <div className={`${styles.key} ${styles.leftshift}`}>Shift</div>
-                <div className={`${styles.key} ${styles["double-rows"]}`}>
-                    &#34;
-                    <br />
-                    &#39;
-                </div>
+                <DoubleRowsKey upper="&#34;" lower="&#39;" />
                 <SingleKey char="Q" />
                 <SingleKey char="J" />
                 <SingleKey char="K" />
@@ -129,13 +68,13 @@ export default function SingleKeyboard() {
                     Shift
                 </div>
                 <div className={`${styles.key} ${styles.leftctrl}`}>Ctrl</div>
-                <div className={styles.key}>Alt</div>
+                <SingleKey char="Alt" />
                 <div className={`${styles.key} ${styles.command}`}>Command</div>
                 <div className={`${styles.key} ${styles.space}`}>Space</div>
                 <div className={`${styles.key} ${styles.command}`}>command</div>
-                <div className={styles.key}>Alt</div>
-                <div className={styles.key}>Ctrl</div>
-                <div className={styles.key}>Fn</div>
+                <SingleKey char="Alt" />
+                <SingleKey char="Ctrl" />
+                <SingleKey char="Fn" />
             </div>
         </div>
     );
@@ -143,4 +82,14 @@ export default function SingleKeyboard() {
 
 function SingleKey({ char }: { char: string }) {
     return <div className={styles.key}>{char}</div>;
+}
+
+function DoubleRowsKey({ upper, lower }: { upper: string; lower: string }) {
+    return (
+        <div className={`${styles.key} ${styles["double-rows"]}`}>
+            {upper}
+            <br />
+            {lower}
+        </div>
+    );
 }
