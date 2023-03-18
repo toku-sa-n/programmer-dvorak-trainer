@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { Press_Start_2P } from "next/font/google";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./keyboard.module.css";
 
 // The license for this class is at `/licenses/YYTypeScript`.
@@ -8,116 +9,28 @@ class ExhaustiveError extends Error {
     }
 }
 
-// The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
-export default function Keyboard() {
-    return (
-        <div className={styles["keyboard-container"]}>
-            <div className={styles["keyboard-base"]}>
-                <DoubleRowsKey upper="~" lower="$" />
-                <DoubleRowsKey upper="%" lower="&" />
-                <DoubleRowsKey upper="7" lower="[" />
-                <DoubleRowsKey upper="5" lower="&#123;" />
-                <DoubleRowsKey upper="3" lower="&#125;" />
-                <DoubleRowsKey upper="1" lower="(" />
-                <DoubleRowsKey upper="9" lower="=" />
-                <DoubleRowsKey upper="0" lower="*" />
-                <DoubleRowsKey upper="2" lower=")" />
-                <DoubleRowsKey upper="4" lower="+" />
-                <DoubleRowsKey upper="6" lower="]" />
-                <DoubleRowsKey upper="8" lower="!" />
-                <DoubleRowsKey upper="`" lower="#" />
-                <SpecialKey type="delete" />
-                <SpecialKey type="tab" />
-                <DoubleRowsKey upper=":" lower=";" />
-                <DoubleRowsKey upper="&lt;" lower="," />
-                <DoubleRowsKey upper="&gt;" lower="." />
-                <SingleRowKey char="P" />
-                <SingleRowKey char="Y" />
-                <SingleRowKey char="F" />
-                <SingleRowKey char="G" />
-                <SingleRowKey char="C" />
-                <SingleRowKey char="R" />
-                <SingleRowKey char="L" />
-                <DoubleRowsKey upper="?" lower="/" />
-                <DoubleRowsKey upper="^" lower="@" />
-                <SpecialKey type="backslash" />
-                <SpecialKey type="capslock" />
-                <SingleRowKey char="A" />
-                <SingleRowKey char="O" />
-                <SingleRowKey char="E" />
-                <SingleRowKey char="U" />
-                <SingleRowKey char="I" />
-                <SingleRowKey char="D" />
-                <SingleRowKey char="H" />
-                <SingleRowKey char="T" />
-                <SingleRowKey char="N" />
-                <SingleRowKey char="S" />
-                <DoubleRowsKey upper="_" lower="-" />
-                <SpecialKey type="return" />
-                <SpecialKey type="leftshift" />
-                <DoubleRowsKey upper="&#34;" lower="&#39;" />
-                <SingleRowKey char="Q" />
-                <SingleRowKey char="J" />
-                <SingleRowKey char="K" />
-                <SingleRowKey char="X" />
-                <SingleRowKey char="B" />
-                <SingleRowKey char="M" />
-                <SingleRowKey char="W" />
-                <SingleRowKey char="V" />
-                <SingleRowKey char="Z" />
-                <SpecialKey type="rightshift" />
-                <SpecialKey type="leftctrl" />
-                <SingleRowKey char="Alt" />
-                <SpecialKey type="command" />
-                <SpecialKey type="space" />
-                <SpecialKey type="command" />
-                <SingleRowKey char="Alt" />
-                <SingleRowKey char="Ctrl" />
-                <SingleRowKey char="Fn" />
-            </div>
-        </div>
-    );
-}
+type Key = SingleRowKey | DoubleRowsKey | SpecialKey;
 
-function SingleRowKey({ char }: { char: string }) {
-    const [isKeyDown, setIsKeyDown] = useState(false);
+type SingleRowKey = {
+    type: "SingleRowKey";
+    char: string;
+    pressed?: boolean;
+};
 
-    function onKeyDown(e: Event) {
-        setIsKeyDown(true);
-        e.preventDefault();
-    }
+type DoubleRowsKey = {
+    type: "DoubleRowsKey";
+    upper: string;
+    lower: string;
+    pressed?: boolean;
+};
 
-    function onKeyUp(e: Event) {
-        setIsKeyDown(false);
-        e.preventDefault();
-    }
+type SpecialKey = {
+    type: "SpecialKey";
+    name: SpecialKeyName;
+    pressed?: boolean;
+};
 
-    useEffect(() => {
-        globalThis.addEventListener("keydown", onKeyDown);
-        globalThis.addEventListener("keyup", onKeyUp);
-
-        return () => {
-            globalThis.removeEventListener("keydown", onKeyDown);
-            globalThis.removeEventListener("keyup", onKeyUp);
-        };
-    });
-
-    let css = styles.key + (isKeyDown ? " " + styles.typed : "");
-
-    return <div className={css}>{char}</div>;
-}
-
-function DoubleRowsKey({ upper, lower }: { upper: string; lower: string }) {
-    return (
-        <div className={`${styles.key} ${styles["double-rows"]}`}>
-            {upper}
-            <br />
-            {lower}
-        </div>
-    );
-}
-
-type SpecialKey =
+type SpecialKeyName =
     | "backslash"
     | "capslock"
     | "command"
@@ -129,11 +42,165 @@ type SpecialKey =
     | "space"
     | "tab";
 
-function SpecialKey({ type }: { type: SpecialKey }) {
+// The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
+export default function Keyboard() {
+    const [pressedKeys, setPressedKeys] = useState(new Set());
+
+    const keys: Array<Key> = [
+        { type: "DoubleRowsKey", upper: "~", lower: "$" },
+        { type: "DoubleRowsKey", upper: "%", lower: "&" },
+        { type: "DoubleRowsKey", upper: "7", lower: "[" },
+        { type: "DoubleRowsKey", upper: "5", lower: "{" },
+        { type: "DoubleRowsKey", upper: "3", lower: "}" },
+        { type: "DoubleRowsKey", upper: "1", lower: "(" },
+        { type: "DoubleRowsKey", upper: "9", lower: "=" },
+        { type: "DoubleRowsKey", upper: "0", lower: "*" },
+        { type: "DoubleRowsKey", upper: "2", lower: ")" },
+        { type: "DoubleRowsKey", upper: "4", lower: "+" },
+        { type: "DoubleRowsKey", upper: "6", lower: "]" },
+        { type: "DoubleRowsKey", upper: "8", lower: "!" },
+        { type: "DoubleRowsKey", upper: "`", lower: "#" },
+        { type: "SpecialKey", name: "delete" },
+        { type: "SpecialKey", name: "tab" },
+        { type: "DoubleRowsKey", upper: ":", lower: ";" },
+        { type: "DoubleRowsKey", upper: "<", lower: "," },
+        { type: "DoubleRowsKey", upper: ">", lower: "." },
+        { type: "SingleRowKey", char: "P" },
+        { type: "SingleRowKey", char: "Y" },
+        { type: "SingleRowKey", char: "F" },
+        { type: "SingleRowKey", char: "G" },
+        { type: "SingleRowKey", char: "C" },
+        { type: "SingleRowKey", char: "R" },
+        { type: "SingleRowKey", char: "L" },
+        { type: "DoubleRowsKey", upper: "?", lower: "/" },
+        { type: "DoubleRowsKey", upper: "^", lower: "@" },
+        { type: "SpecialKey", name: "backslash" },
+        { type: "SpecialKey", name: "capslock" },
+        { type: "SingleRowKey", char: "A" },
+        { type: "SingleRowKey", char: "O" },
+        { type: "SingleRowKey", char: "E" },
+        { type: "SingleRowKey", char: "U" },
+        { type: "SingleRowKey", char: "I" },
+        { type: "SingleRowKey", char: "D" },
+        { type: "SingleRowKey", char: "H" },
+        { type: "SingleRowKey", char: "T" },
+        { type: "SingleRowKey", char: "N" },
+        { type: "SingleRowKey", char: "S" },
+        { type: "DoubleRowsKey", upper: "_", lower: "-" },
+        { type: "SpecialKey", name: "return" },
+        { type: "SpecialKey", name: "leftshift" },
+        { type: "DoubleRowsKey", upper: '"', lower: "'" },
+        { type: "SingleRowKey", char: "Q" },
+        { type: "SingleRowKey", char: "J" },
+        { type: "SingleRowKey", char: "K" },
+        { type: "SingleRowKey", char: "X" },
+        { type: "SingleRowKey", char: "B" },
+        { type: "SingleRowKey", char: "M" },
+        { type: "SingleRowKey", char: "W" },
+        { type: "SingleRowKey", char: "V" },
+        { type: "SingleRowKey", char: "Z" },
+        { type: "SpecialKey", name: "rightshift" },
+        { type: "SpecialKey", name: "leftctrl" },
+        { type: "SingleRowKey", char: "Alt" },
+        { type: "SpecialKey", name: "command" },
+        { type: "SpecialKey", name: "space" },
+        { type: "SpecialKey", name: "command" },
+        { type: "SingleRowKey", char: "Alt" },
+        { type: "SingleRowKey", char: "Ctrl" },
+        { type: "SingleRowKey", char: "Fn" },
+    ];
+
+    const onKeyDown = useCallback((e: KeyboardEvent) => {
+        e.preventDefault();
+
+        setPressedKeys((keys) => {
+            let newKeys = new Set(keys);
+            newKeys.add(e.key.toLowerCase());
+            return newKeys;
+        });
+    }, []);
+
+    const onKeyUp = useCallback(
+        (e: KeyboardEvent) => {
+            e.preventDefault();
+
+            console.log(e.key, pressedKeys);
+
+            setPressedKeys((keys) => {
+                let newKeys = new Set(keys);
+                newKeys.delete(e.key.toLowerCase());
+                return newKeys;
+            });
+        },
+        [pressedKeys]
+    );
+
+    useEffect(() => {
+        document.addEventListener("keydown", onKeyDown);
+        document.addEventListener("keyup", onKeyUp);
+
+        return () => {
+            document.removeEventListener("keydown", onKeyDown);
+            document.removeEventListener("keyup", onKeyUp);
+        };
+    }, [onKeyDown, onKeyUp, pressedKeys]);
+
+    const keyComponents = keys.map((x, i) => {
+        switch (x.type) {
+            case "SingleRowKey":
+                console.log(
+                    x.char.toLowerCase(),
+                    pressedKeys,
+                    pressedKeys.has(x.char.toLowerCase())
+                );
+                if (pressedKeys.has(x.char.toLowerCase())) {
+                    x.pressed = true;
+                }
+                return <SingleRowKey key={i} {...x} />;
+            case "DoubleRowsKey":
+                if (
+                    pressedKeys.has(x.lower.toLowerCase()) ||
+                    pressedKeys.has(x.upper.toLowerCase())
+                ) {
+                    x.pressed = true;
+                }
+                return <DoubleRowsKey key={i} {...x} />;
+            case "SpecialKey":
+                if (pressedKeys.has(x.name)) {
+                    x.pressed = true;
+                }
+                return <SpecialKey key={i} {...x} />;
+        }
+    });
+
+    return (
+        <div className={styles["keyboard-container"]}>
+            <div className={styles["keyboard-base"]}>{keyComponents}</div>
+        </div>
+    );
+}
+
+function SingleRowKey({ char, pressed }: SingleRowKey) {
+    console.log(pressed);
+    const classes = styles.key + (pressed ? " " + styles.typed : "");
+    return <div className={classes}>{char}</div>;
+}
+
+function DoubleRowsKey({ upper, lower }: DoubleRowsKey) {
+    return (
+        <div className={`${styles.key} ${styles["double-rows"]}`}>
+            {upper}
+            <br />
+            {lower}
+        </div>
+    );
+}
+
+function SpecialKey({ name }: SpecialKey) {
     let text;
     let css;
 
-    switch (type) {
+    switch (name) {
         case "backslash":
             return (
                 <div
@@ -180,7 +247,7 @@ function SpecialKey({ type }: { type: SpecialKey }) {
             css = styles.tab;
             break;
         default:
-            throw new ExhaustiveError(type);
+            throw new ExhaustiveError(name);
             break;
     }
 
