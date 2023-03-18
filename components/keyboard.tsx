@@ -18,8 +18,8 @@ export default function SingleKeyboard() {
                 <DoubleRowsKey upper="6" lower="]" />
                 <DoubleRowsKey upper="8" lower="!" />
                 <DoubleRowsKey upper="`" lower="#" />
-                <div className={`${styles.key} ${styles.delete}`}>Delete</div>
-                <div className={`${styles.key} ${styles.tab}`}>Tab</div>
+                <SingleKey char="Delete" specialKey="delete" />
+                <SingleKey char="Tab" specialKey="tab" />
                 <DoubleRowsKey upper=":" lower=";" />
                 <DoubleRowsKey upper="&lt;" lower="," />
                 <DoubleRowsKey upper="&gt;" lower="." />
@@ -38,9 +38,7 @@ export default function SingleKeyboard() {
                     |
                     <br />\
                 </div>
-                <div className={`${styles.key} ${styles.capslock}`}>
-                    CapsLock
-                </div>
+                <SingleKey char="CapsLock" specialKey="capslock" />
                 <SingleKey char="A" />
                 <SingleKey char="O" />
                 <SingleKey char="E" />
@@ -52,8 +50,8 @@ export default function SingleKeyboard() {
                 <SingleKey char="N" />
                 <SingleKey char="S" />
                 <DoubleRowsKey upper="_" lower="-" />
-                <div className={`${styles.key} ${styles.return}`}>Return</div>
-                <div className={`${styles.key} ${styles.leftshift}`}>Shift</div>
+                <SingleKey char="Return" specialKey="return" />
+                <SingleKey char="Shift" specialKey="leftshift" />
                 <DoubleRowsKey upper="&#34;" lower="&#39;" />
                 <SingleKey char="Q" />
                 <SingleKey char="J" />
@@ -64,14 +62,12 @@ export default function SingleKeyboard() {
                 <SingleKey char="W" />
                 <SingleKey char="V" />
                 <SingleKey char="Z" />
-                <div className={`${styles.key} ${styles.rightshift}`}>
-                    Shift
-                </div>
-                <div className={`${styles.key} ${styles.leftctrl}`}>Ctrl</div>
+                <SingleKey char="Shift" specialKey="rightshift" />
+                <SingleKey char="Ctrl" specialKey="leftctrl" />
                 <SingleKey char="Alt" />
-                <div className={`${styles.key} ${styles.command}`}>Command</div>
-                <div className={`${styles.key} ${styles.space}`}>Space</div>
-                <div className={`${styles.key} ${styles.command}`}>command</div>
+                <SingleKey char="Command" specialKey="command" />
+                <SingleKey char="Space" specialKey="space" />
+                <SingleKey char="Command" specialKey="command" />
                 <SingleKey char="Alt" />
                 <SingleKey char="Ctrl" />
                 <SingleKey char="Fn" />
@@ -80,8 +76,64 @@ export default function SingleKeyboard() {
     );
 }
 
-function SingleKey({ char }: { char: string }) {
-    return <div className={styles.key}>{char}</div>;
+type SpecialKeys =
+    | "backslash"
+    | "capslock"
+    | "command"
+    | "delete"
+    | "leftctrl"
+    | "leftshift"
+    | "return"
+    | "rightshift"
+    | "space"
+    | "tab";
+
+function SingleKey({
+    char,
+    specialKey,
+}: {
+    char: string;
+    specialKey?: SpecialKeys;
+}) {
+    let css = styles.key;
+
+    switch (specialKey) {
+        case "backslash":
+            css += " " + styles.backslash;
+            break;
+        case "capslock":
+            css += " " + styles.capslock;
+            break;
+        case "command":
+            css += " " + styles.command;
+            break;
+        case "delete":
+            css += " " + styles.delete;
+            break;
+        case "leftctrl":
+            css += " " + styles.leftctrl;
+            break;
+        case "leftshift":
+            css += " " + styles.leftshift;
+            break;
+        case "return":
+            css += " " + styles.return;
+            break;
+        case "rightshift":
+            css += " " + styles.rightshift;
+            break;
+        case "space":
+            css += " " + styles.space;
+            break;
+        case "tab":
+            css += " " + styles.tab;
+            break;
+        default:
+            new SyntaxError("Invalid key is passed.");
+            break;
+    }
+
+    return <div className={css}>{char}</div>;
 }
 
 function DoubleRowsKey({ upper, lower }: { upper: string; lower: string }) {
