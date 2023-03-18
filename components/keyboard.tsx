@@ -39,12 +39,7 @@ export default function SingleRowKeyboard() {
                 <SingleRowKey char="L" />
                 <DoubleRowsKey upper="?" lower="/" />
                 <DoubleRowsKey upper="^" lower="@" />
-                <div
-                    className={`${styles.key} ${styles.backslash} ${styles["double-rows"]}`}
-                >
-                    |
-                    <br />\
-                </div>
+                <SpecialKey type="backslash" />
                 <SpecialKey type="capslock" />
                 <SingleRowKey char="A" />
                 <SingleRowKey char="O" />
@@ -117,9 +112,14 @@ function SpecialKey({ type }: { type: SpecialKey }) {
 
     switch (type) {
         case "backslash":
-            text = "\\";
-            css = styles.backslash;
-            break;
+            return (
+                <div
+                    className={`${styles.key} ${styles.backslash} ${styles["double-rows"]}`}
+                >
+                    |
+                    <br />\
+                </div>
+            );
         case "capslock":
             text = "CapsLock";
             css = styles.capslock;
