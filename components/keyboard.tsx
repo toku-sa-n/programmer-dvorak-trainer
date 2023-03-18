@@ -18,8 +18,8 @@ export default function SingleRowKeyboard() {
                 <DoubleRowsKey upper="6" lower="]" />
                 <DoubleRowsKey upper="8" lower="!" />
                 <DoubleRowsKey upper="`" lower="#" />
-                <SingleRowKey char="Delete" specialKey="delete" />
-                <SingleRowKey char="Tab" specialKey="tab" />
+                <SpecialKey type="delete" />
+                <SpecialKey type="tab" />
                 <DoubleRowsKey upper=":" lower=";" />
                 <DoubleRowsKey upper="&lt;" lower="," />
                 <DoubleRowsKey upper="&gt;" lower="." />
@@ -38,7 +38,7 @@ export default function SingleRowKeyboard() {
                     |
                     <br />\
                 </div>
-                <SingleRowKey char="CapsLock" specialKey="capslock" />
+                <SpecialKey type="capslock" />
                 <SingleRowKey char="A" />
                 <SingleRowKey char="O" />
                 <SingleRowKey char="E" />
@@ -50,8 +50,8 @@ export default function SingleRowKeyboard() {
                 <SingleRowKey char="N" />
                 <SingleRowKey char="S" />
                 <DoubleRowsKey upper="_" lower="-" />
-                <SingleRowKey char="Return" specialKey="return" />
-                <SingleRowKey char="Shift" specialKey="leftshift" />
+                <SpecialKey type="return" />
+                <SpecialKey type="leftshift" />
                 <DoubleRowsKey upper="&#34;" lower="&#39;" />
                 <SingleRowKey char="Q" />
                 <SingleRowKey char="J" />
@@ -62,12 +62,12 @@ export default function SingleRowKeyboard() {
                 <SingleRowKey char="W" />
                 <SingleRowKey char="V" />
                 <SingleRowKey char="Z" />
-                <SingleRowKey char="Shift" specialKey="rightshift" />
-                <SingleRowKey char="Ctrl" specialKey="leftctrl" />
+                <SpecialKey type="rightshift" />
+                <SpecialKey type="leftctrl" />
                 <SingleRowKey char="Alt" />
-                <SingleRowKey char="Command" specialKey="command" />
-                <SingleRowKey char="Space" specialKey="space" />
-                <SingleRowKey char="Command" specialKey="command" />
+                <SpecialKey type="command" />
+                <SpecialKey type="space" />
+                <SpecialKey type="command" />
                 <SingleRowKey char="Alt" />
                 <SingleRowKey char="Ctrl" />
                 <SingleRowKey char="Fn" />
@@ -76,7 +76,7 @@ export default function SingleRowKeyboard() {
     );
 }
 
-type SpecialKeys =
+type SpecialKey =
     | "backslash"
     | "capslock"
     | "command"
@@ -88,50 +88,8 @@ type SpecialKeys =
     | "space"
     | "tab";
 
-function SingleRowKey({
-    char,
-    specialKey,
-}: {
-    char: string;
-    specialKey?: SpecialKeys;
-}) {
+function SingleRowKey({ char }: { char: string }) {
     let css = styles.key;
-
-    switch (specialKey) {
-        case "backslash":
-            css += " " + styles.backslash;
-            break;
-        case "capslock":
-            css += " " + styles.capslock;
-            break;
-        case "command":
-            css += " " + styles.command;
-            break;
-        case "delete":
-            css += " " + styles.delete;
-            break;
-        case "leftctrl":
-            css += " " + styles.leftctrl;
-            break;
-        case "leftshift":
-            css += " " + styles.leftshift;
-            break;
-        case "return":
-            css += " " + styles.return;
-            break;
-        case "rightshift":
-            css += " " + styles.rightshift;
-            break;
-        case "space":
-            css += " " + styles.space;
-            break;
-        case "tab":
-            css += " " + styles.tab;
-            break;
-        default:
-            new SyntaxError("Invalid key is passed.");
-            break;
-    }
 
     return <div className={css}>{char}</div>;
 }
@@ -144,4 +102,57 @@ function DoubleRowsKey({ upper, lower }: { upper: string; lower: string }) {
             {lower}
         </div>
     );
+}
+
+function SpecialKey({ type }: { type: SpecialKey }) {
+    let text;
+    let css;
+
+    switch (type) {
+        case "backslash":
+            text = "\\";
+            css = styles.backslash;
+            break;
+        case "capslock":
+            text = "CapsLock";
+            css = styles.capslock;
+            break;
+        case "command":
+            text = "Command";
+            css = styles.command;
+            break;
+        case "delete":
+            text = "Delete";
+            css = styles.delete;
+            break;
+        case "leftctrl":
+            text = "Ctrl";
+            css = styles.leftctrl;
+            break;
+        case "leftshift":
+            text = "Shift";
+            css = styles.leftshift;
+            break;
+        case "return":
+            text = "Return";
+            css = styles.return;
+            break;
+        case "rightshift":
+            text = "Shift";
+            css = styles.rightshift;
+            break;
+        case "space":
+            text = "Space";
+            css = styles.space;
+            break;
+        case "tab":
+            text = "Tab";
+            css = styles.tab;
+            break;
+        default:
+            new SyntaxError("Invalid key is passed.");
+            break;
+    }
+
+    return <div className={`${styles.key} ${css}`}>{text}</div>;
 }
