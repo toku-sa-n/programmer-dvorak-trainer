@@ -79,18 +79,6 @@ export default function Keyboard() {
     );
 }
 
-type SpecialKey =
-    | "backslash"
-    | "capslock"
-    | "command"
-    | "delete"
-    | "leftctrl"
-    | "leftshift"
-    | "return"
-    | "rightshift"
-    | "space"
-    | "tab";
-
 function SingleRowKey({ char }: { char: string }) {
     const [isKeyDown, setIsKeyDown] = useState(false);
 
@@ -128,6 +116,18 @@ function DoubleRowsKey({ upper, lower }: { upper: string; lower: string }) {
         </div>
     );
 }
+
+type SpecialKey =
+    | "backslash"
+    | "capslock"
+    | "command"
+    | "delete"
+    | "leftctrl"
+    | "leftshift"
+    | "return"
+    | "rightshift"
+    | "space"
+    | "tab";
 
 function SpecialKey({ type }: { type: SpecialKey }) {
     let text;
