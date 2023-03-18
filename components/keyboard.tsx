@@ -146,11 +146,6 @@ export default function Keyboard() {
     const keyComponents = keys.map((x, i) => {
         switch (x.type) {
             case "SingleRowKey":
-                console.log(
-                    x.char.toLowerCase(),
-                    pressedKeys,
-                    pressedKeys.has(x.char.toLowerCase())
-                );
                 if (pressedKeys.has(x.char.toLowerCase())) {
                     x.pressed = true;
                 }
@@ -179,7 +174,6 @@ export default function Keyboard() {
 }
 
 function SingleRowKey({ char, pressed }: SingleRowKey) {
-    console.log(pressed);
     const classes = styles.key + (pressed ? " " + styles.typed : "");
     return <div className={classes}>{char}</div>;
 }
