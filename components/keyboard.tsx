@@ -1,7 +1,7 @@
 import styles from "./keyboard.module.css";
 
 // The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
-export default function Keyboard() {
+export default function SingleKeyboard() {
     return (
         <div className={styles["keyboard-container"]}>
             <div className={styles["keyboard-base"]}>
@@ -71,13 +71,13 @@ export default function Keyboard() {
                     &gt;
                     <br />.
                 </div>
-                <Key char="P" />
-                <Key char="Y" />
-                <Key char="F" />
-                <Key char="G" />
-                <Key char="C" />
-                <Key char="R" />
-                <Key char="L" />
+                <SingleKey char="P" />
+                <SingleKey char="Y" />
+                <SingleKey char="F" />
+                <SingleKey char="G" />
+                <SingleKey char="C" />
+                <SingleKey char="R" />
+                <SingleKey char="L" />
                 <div className={`${styles.key} ${styles["double-rows"]}`}>
                     ?
                     <br />/
@@ -95,16 +95,16 @@ export default function Keyboard() {
                 <div className={`${styles.key} ${styles.capslock}`}>
                     CapsLock
                 </div>
-                <Key char="A" />
-                <Key char="O" />
-                <Key char="E" />
-                <Key char="U" />
-                <Key char="I" />
-                <Key char="D" />
-                <Key char="H" />
-                <Key char="T" />
-                <Key char="N" />
-                <Key char="S" />
+                <SingleKey char="A" />
+                <SingleKey char="O" />
+                <SingleKey char="E" />
+                <SingleKey char="U" />
+                <SingleKey char="I" />
+                <SingleKey char="D" />
+                <SingleKey char="H" />
+                <SingleKey char="T" />
+                <SingleKey char="N" />
+                <SingleKey char="S" />
                 <div className={`${styles.key} ${styles["double-rows"]}`}>
                     _
                     <br />-
@@ -116,15 +116,15 @@ export default function Keyboard() {
                     <br />
                     &#39;
                 </div>
-                <Key char="Q" />
-                <Key char="J" />
-                <Key char="K" />
-                <Key char="X" />
-                <Key char="B" />
-                <Key char="M" />
-                <Key char="W" />
-                <Key char="V" />
-                <Key char="Z" />
+                <SingleKey char="Q" />
+                <SingleKey char="J" />
+                <SingleKey char="K" />
+                <SingleKey char="X" />
+                <SingleKey char="B" />
+                <SingleKey char="M" />
+                <SingleKey char="W" />
+                <SingleKey char="V" />
+                <SingleKey char="Z" />
                 <div className={`${styles.key} ${styles.rightshift}`}>
                     Shift
                 </div>
@@ -141,6 +141,6 @@ export default function Keyboard() {
     );
 }
 
-function Key({ char }: { char: string }) {
+function SingleKey({ char }: { char: string }) {
     return <div className={styles.key}>{char}</div>;
 }
