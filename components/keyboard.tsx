@@ -46,6 +46,7 @@ type SpecialKeyName =
 
 // The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
 export default function Keyboard() {
+    // TODO: Is it okay to call this here?
     enableMapSet();
 
     const [pressedKeys, setPressedKeys] = useImmer(new Set());
@@ -114,6 +115,7 @@ export default function Keyboard() {
         { type: "SingleRowKey", char: "Fn" },
     ];
 
+    // TODO: Is it really needed to use `useEffect`?
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {
             e.preventDefault();
