@@ -1,5 +1,12 @@
 import styles from "./keyboard.module.css";
 
+// The license for this class is at `/licenses/YYTypeScript`.
+class ExhaustiveError extends Error {
+    constructor(value: never, message = `Unsupported type: ${value}`) {
+        super(message);
+    }
+}
+
 // The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
 export default function SingleRowKeyboard() {
     return (
@@ -150,7 +157,7 @@ function SpecialKey({ type }: { type: SpecialKey }) {
             css = styles.tab;
             break;
         default:
-            new SyntaxError("Invalid key is passed.");
+            throw new ExhaustiveError(type);
             break;
     }
 
