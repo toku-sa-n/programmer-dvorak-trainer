@@ -114,17 +114,14 @@ export default function Keyboard() {
         { type: "SingleRowKey", char: "Fn" },
     ];
 
-    const onKeyDown = useCallback(
-        (e: KeyboardEvent) => {
+    useEffect(() => {
+        const onKeyDown = (e: KeyboardEvent) => {
             e.preventDefault();
 
             setPressedKeys((keys) => keys.add(e.key.toLowerCase()));
-        },
-        [setPressedKeys]
-    );
+        };
 
-    const onKeyUp = useCallback(
-        (e: KeyboardEvent) => {
+        const onKeyUp = (e: KeyboardEvent) => {
             e.preventDefault();
 
             console.log(e.key, pressedKeys);
@@ -133,11 +130,8 @@ export default function Keyboard() {
                 keys.delete(e.key.toLowerCase());
                 return keys;
             });
-        },
-        [pressedKeys, setPressedKeys]
-    );
+        };
 
-    useEffect(() => {
         document.addEventListener("keydown", onKeyDown);
         document.addEventListener("keyup", onKeyUp);
 
@@ -145,7 +139,7 @@ export default function Keyboard() {
             document.removeEventListener("keydown", onKeyDown);
             document.removeEventListener("keyup", onKeyUp);
         };
-    }, [onKeyDown, onKeyUp, pressedKeys]);
+    }, [pressedKeys, setPressedKeys]);
 
     const keyComponents = keys.map((x, i) => {
         switch (x.type) {
