@@ -1,7 +1,7 @@
 import styles from "./keyboard.module.css";
 
 // The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
-export default function SingleKeyboard() {
+export default function SingleRowKeyboard() {
     return (
         <div className={styles["keyboard-container"]}>
             <div className={styles["keyboard-base"]}>
@@ -18,18 +18,18 @@ export default function SingleKeyboard() {
                 <DoubleRowsKey upper="6" lower="]" />
                 <DoubleRowsKey upper="8" lower="!" />
                 <DoubleRowsKey upper="`" lower="#" />
-                <SingleKey char="Delete" specialKey="delete" />
-                <SingleKey char="Tab" specialKey="tab" />
+                <SingleRowKey char="Delete" specialKey="delete" />
+                <SingleRowKey char="Tab" specialKey="tab" />
                 <DoubleRowsKey upper=":" lower=";" />
                 <DoubleRowsKey upper="&lt;" lower="," />
                 <DoubleRowsKey upper="&gt;" lower="." />
-                <SingleKey char="P" />
-                <SingleKey char="Y" />
-                <SingleKey char="F" />
-                <SingleKey char="G" />
-                <SingleKey char="C" />
-                <SingleKey char="R" />
-                <SingleKey char="L" />
+                <SingleRowKey char="P" />
+                <SingleRowKey char="Y" />
+                <SingleRowKey char="F" />
+                <SingleRowKey char="G" />
+                <SingleRowKey char="C" />
+                <SingleRowKey char="R" />
+                <SingleRowKey char="L" />
                 <DoubleRowsKey upper="?" lower="/" />
                 <DoubleRowsKey upper="^" lower="@" />
                 <div
@@ -38,39 +38,39 @@ export default function SingleKeyboard() {
                     |
                     <br />\
                 </div>
-                <SingleKey char="CapsLock" specialKey="capslock" />
-                <SingleKey char="A" />
-                <SingleKey char="O" />
-                <SingleKey char="E" />
-                <SingleKey char="U" />
-                <SingleKey char="I" />
-                <SingleKey char="D" />
-                <SingleKey char="H" />
-                <SingleKey char="T" />
-                <SingleKey char="N" />
-                <SingleKey char="S" />
+                <SingleRowKey char="CapsLock" specialKey="capslock" />
+                <SingleRowKey char="A" />
+                <SingleRowKey char="O" />
+                <SingleRowKey char="E" />
+                <SingleRowKey char="U" />
+                <SingleRowKey char="I" />
+                <SingleRowKey char="D" />
+                <SingleRowKey char="H" />
+                <SingleRowKey char="T" />
+                <SingleRowKey char="N" />
+                <SingleRowKey char="S" />
                 <DoubleRowsKey upper="_" lower="-" />
-                <SingleKey char="Return" specialKey="return" />
-                <SingleKey char="Shift" specialKey="leftshift" />
+                <SingleRowKey char="Return" specialKey="return" />
+                <SingleRowKey char="Shift" specialKey="leftshift" />
                 <DoubleRowsKey upper="&#34;" lower="&#39;" />
-                <SingleKey char="Q" />
-                <SingleKey char="J" />
-                <SingleKey char="K" />
-                <SingleKey char="X" />
-                <SingleKey char="B" />
-                <SingleKey char="M" />
-                <SingleKey char="W" />
-                <SingleKey char="V" />
-                <SingleKey char="Z" />
-                <SingleKey char="Shift" specialKey="rightshift" />
-                <SingleKey char="Ctrl" specialKey="leftctrl" />
-                <SingleKey char="Alt" />
-                <SingleKey char="Command" specialKey="command" />
-                <SingleKey char="Space" specialKey="space" />
-                <SingleKey char="Command" specialKey="command" />
-                <SingleKey char="Alt" />
-                <SingleKey char="Ctrl" />
-                <SingleKey char="Fn" />
+                <SingleRowKey char="Q" />
+                <SingleRowKey char="J" />
+                <SingleRowKey char="K" />
+                <SingleRowKey char="X" />
+                <SingleRowKey char="B" />
+                <SingleRowKey char="M" />
+                <SingleRowKey char="W" />
+                <SingleRowKey char="V" />
+                <SingleRowKey char="Z" />
+                <SingleRowKey char="Shift" specialKey="rightshift" />
+                <SingleRowKey char="Ctrl" specialKey="leftctrl" />
+                <SingleRowKey char="Alt" />
+                <SingleRowKey char="Command" specialKey="command" />
+                <SingleRowKey char="Space" specialKey="space" />
+                <SingleRowKey char="Command" specialKey="command" />
+                <SingleRowKey char="Alt" />
+                <SingleRowKey char="Ctrl" />
+                <SingleRowKey char="Fn" />
             </div>
         </div>
     );
@@ -88,7 +88,7 @@ type SpecialKeys =
     | "space"
     | "tab";
 
-function SingleKey({
+function SingleRowKey({
     char,
     specialKey,
 }: {
