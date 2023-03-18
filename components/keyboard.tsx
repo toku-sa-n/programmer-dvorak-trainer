@@ -1,4 +1,6 @@
 import { Press_Start_2P } from "next/font/google";
+import { useImmer } from "use-immer";
+import { enableMapSet } from "immer";
 import { useCallback, useEffect, useState } from "react";
 import styles from "./keyboard.module.css";
 
@@ -44,7 +46,9 @@ type SpecialKeyName =
 
 // The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
 export default function Keyboard() {
-    const [pressedKeys, setPressedKeys] = useState(new Set());
+    enableMapSet();
+
+    const [pressedKeys, setPressedKeys] = useImmer(new Set());
 
     const keys: Array<Key> = [
         { type: "DoubleRowsKey", upper: "~", lower: "$" },
@@ -110,15 +114,14 @@ export default function Keyboard() {
         { type: "SingleRowKey", char: "Fn" },
     ];
 
-    const onKeyDown = useCallback((e: KeyboardEvent) => {
-        e.preventDefault();
+    const onKeyDown = useCallback(
+        (e: KeyboardEvent) => {
+            e.preventDefault();
 
-        setPressedKeys((keys) => {
-            let newKeys = new Set(keys);
-            newKeys.add(e.key.toLowerCase());
-            return newKeys;
-        });
-    }, []);
+            setPressedKeys((keys) => keys.add(e.key.toLowerCase()));
+        },
+        [setPressedKeys]
+    );
 
     const onKeyUp = useCallback(
         (e: KeyboardEvent) => {
@@ -127,12 +130,11 @@ export default function Keyboard() {
             console.log(e.key, pressedKeys);
 
             setPressedKeys((keys) => {
-                let newKeys = new Set(keys);
-                newKeys.delete(e.key.toLowerCase());
-                return newKeys;
+                keys.delete(e.key.toLowerCase());
+                return keys;
             });
         },
-        [pressedKeys]
+        [pressedKeys, setPressedKeys]
     );
 
     useEffect(() => {
