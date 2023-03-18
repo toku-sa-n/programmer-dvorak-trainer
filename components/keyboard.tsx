@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styles from "./keyboard.module.css";
 
 // The license for this class is at `/licenses/YYTypeScript`.
@@ -91,7 +92,29 @@ type SpecialKey =
     | "tab";
 
 function SingleRowKey({ char }: { char: string }) {
-    let css = styles.key;
+    const [isKeyDown, setIsKeyDown] = useState(false);
+
+    function onKeyDown(e: Event) {
+        setIsKeyDown(true);
+        e.preventDefault();
+    }
+
+    function onKeyUp(e: Event) {
+        setIsKeyDown(false);
+        e.preventDefault();
+    }
+
+    useEffect(() => {
+        globalThis.addEventListener("keydown", onKeyDown);
+        globalThis.addEventListener("keyup", onKeyUp);
+
+        return () => {
+            globalThis.removeEventListener("keydown", onKeyDown);
+            globalThis.removeEventListener("keyup", onKeyUp);
+        };
+    });
+
+    let css = styles.key + (isKeyDown ? " " + styles.typed : "");
 
     return <div className={css}>{char}</div>;
 }
