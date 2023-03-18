@@ -8,7 +8,7 @@ class ExhaustiveError extends Error {
 }
 
 // The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
-export default function SingleRowKeyboard() {
+export default function Keyboard() {
     return (
         <div className={styles["keyboard-container"]}>
             <div className={styles["keyboard-base"]}>
