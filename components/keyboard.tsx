@@ -152,7 +152,7 @@ export default function Keyboard() {
             case "DoubleRowsKey":
                 return <DoubleRowsKey key={x.code} {...x} />;
             case "SpecialKey":
-                return <SpecialKey key={i} {...x} />;
+                return <SpecialKey key={x.code} {...x} />;
         }
     });
 
