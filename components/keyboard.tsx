@@ -14,21 +14,24 @@ class ExhaustiveError extends Error {
 type Key = SingleRowKey | DoubleRowsKey | SpecialKey;
 
 type SingleRowKey = {
-    type: "SingleRowKey";
-    char: string;
+    readonly type: "SingleRowKey";
+    readonly char: string;
+    readonly code: string;
     pressed?: boolean;
 };
 
 type DoubleRowsKey = {
-    type: "DoubleRowsKey";
-    upper: string;
-    lower: string;
+    readonly type: "DoubleRowsKey";
+    readonly upper: string;
+    readonly lower: string;
+    readonly code: string;
     pressed?: boolean;
 };
 
 type SpecialKey = {
-    type: "SpecialKey";
-    name: SpecialKeyName;
+    readonly type: "SpecialKey";
+    readonly name: SpecialKeyName;
+    readonly code: string;
     pressed?: boolean;
 };
 
@@ -44,6 +47,70 @@ type SpecialKeyName =
     | "space"
     | "tab";
 
+const keys: Array<Key> = [
+    { type: "DoubleRowsKey", upper: "~", lower: "$", code: "Backquote" },
+    { type: "DoubleRowsKey", upper: "%", lower: "&", code: "Digit1" },
+    { type: "DoubleRowsKey", upper: "7", lower: "[", code: "Digit2" },
+    { type: "DoubleRowsKey", upper: "5", lower: "{", code: "Digit3" },
+    { type: "DoubleRowsKey", upper: "3", lower: "}", code: "Digit4" },
+    { type: "DoubleRowsKey", upper: "1", lower: "(", code: "Digit5" },
+    { type: "DoubleRowsKey", upper: "9", lower: "=", code: "Digit6" },
+    { type: "DoubleRowsKey", upper: "0", lower: "*", code: "Digit7" },
+    { type: "DoubleRowsKey", upper: "2", lower: ")", code: "Digit8" },
+    { type: "DoubleRowsKey", upper: "4", lower: "+", code: "Digit9" },
+    { type: "DoubleRowsKey", upper: "6", lower: "]", code: "Digit0" },
+    { type: "DoubleRowsKey", upper: "8", lower: "!", code: "Minus" },
+    { type: "DoubleRowsKey", upper: "`", lower: "#", code: "Equal" },
+    { type: "SpecialKey", name: "delete", code: "Backspace" },
+    { type: "SpecialKey", name: "tab", code: "Tab" },
+    { type: "DoubleRowsKey", upper: ":", lower: ";", code: "KeyQ" },
+    { type: "DoubleRowsKey", upper: "<", lower: ",", code: "KeyW" },
+    { type: "DoubleRowsKey", upper: ">", lower: ".", code: "KeyE" },
+    { type: "SingleRowKey", char: "P", code: "KeyR" },
+    { type: "SingleRowKey", char: "Y", code: "KeyT" },
+    { type: "SingleRowKey", char: "F", code: "KeyY" },
+    { type: "SingleRowKey", char: "G", code: "KeyU" },
+    { type: "SingleRowKey", char: "C", code: "KeyI" },
+    { type: "SingleRowKey", char: "R", code: "KeyO" },
+    { type: "SingleRowKey", char: "L", code: "KeyP" },
+    { type: "DoubleRowsKey", upper: "?", lower: "/", code: "BracketLeft" },
+    { type: "DoubleRowsKey", upper: "^", lower: "@", code: "BracketRight" },
+    { type: "SpecialKey", name: "backslash", code: "Backslash" },
+    { type: "SpecialKey", name: "capslock", code: "CapsLock" },
+    { type: "SingleRowKey", char: "A", code: "KeyA" },
+    { type: "SingleRowKey", char: "O", code: "KeyS" },
+    { type: "SingleRowKey", char: "E", code: "KeyD" },
+    { type: "SingleRowKey", char: "U", code: "KeyF" },
+    { type: "SingleRowKey", char: "I", code: "KeyG" },
+    { type: "SingleRowKey", char: "D", code: "KeyH" },
+    { type: "SingleRowKey", char: "H", code: "KeyJ" },
+    { type: "SingleRowKey", char: "T", code: "KeyK" },
+    { type: "SingleRowKey", char: "N", code: "KeyL" },
+    { type: "SingleRowKey", char: "S", code: "Semicolon" },
+    { type: "DoubleRowsKey", upper: "_", lower: "-", code: "Quote" },
+    { type: "SpecialKey", name: "return", code: "Enter" },
+    { type: "SpecialKey", name: "leftshift", code: "ShiftLeft" },
+    { type: "DoubleRowsKey", upper: '"', lower: "'", code: "KeyZ" },
+    { type: "SingleRowKey", char: "Q", code: "KeyX" },
+    { type: "SingleRowKey", char: "J", code: "KeyC" },
+    { type: "SingleRowKey", char: "K", code: "KeyV" },
+    { type: "SingleRowKey", char: "X", code: "KeyB" },
+    { type: "SingleRowKey", char: "B", code: "KeyN" },
+    { type: "SingleRowKey", char: "M", code: "KeyM" },
+    { type: "SingleRowKey", char: "W", code: "Comma" },
+    { type: "SingleRowKey", char: "V", code: "Period" },
+    { type: "SingleRowKey", char: "Z", code: "Slash" },
+    { type: "SpecialKey", name: "rightshift", code: "ShiftRight" },
+    { type: "SpecialKey", name: "leftctrl", code: "ControlLeft" },
+    { type: "SingleRowKey", char: "Alt", code: "AltLeft" },
+    { type: "SpecialKey", name: "command", code: "OSLeft" },
+    { type: "SpecialKey", name: "space", code: "Space" },
+    { type: "SpecialKey", name: "command", code: "OSRight" },
+    { type: "SingleRowKey", char: "Alt", code: "AltRight" },
+    { type: "SingleRowKey", char: "Ctrl", code: "ControlRight" },
+    { type: "SingleRowKey", char: "Fn", code: "asdpogasdpguh" }, // TODO: No code is assigned to the "Fn" key. Is just a empty string ok?
+];
+
 // The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
 export default function Keyboard() {
     // TODO: Is it okay to call this here?
@@ -51,85 +118,19 @@ export default function Keyboard() {
 
     const [pressedKeys, setPressedKeys] = useImmer(new Set());
 
-    const keys: Array<Key> = [
-        { type: "DoubleRowsKey", upper: "~", lower: "$" },
-        { type: "DoubleRowsKey", upper: "%", lower: "&" },
-        { type: "DoubleRowsKey", upper: "7", lower: "[" },
-        { type: "DoubleRowsKey", upper: "5", lower: "{" },
-        { type: "DoubleRowsKey", upper: "3", lower: "}" },
-        { type: "DoubleRowsKey", upper: "1", lower: "(" },
-        { type: "DoubleRowsKey", upper: "9", lower: "=" },
-        { type: "DoubleRowsKey", upper: "0", lower: "*" },
-        { type: "DoubleRowsKey", upper: "2", lower: ")" },
-        { type: "DoubleRowsKey", upper: "4", lower: "+" },
-        { type: "DoubleRowsKey", upper: "6", lower: "]" },
-        { type: "DoubleRowsKey", upper: "8", lower: "!" },
-        { type: "DoubleRowsKey", upper: "`", lower: "#" },
-        { type: "SpecialKey", name: "delete" },
-        { type: "SpecialKey", name: "tab" },
-        { type: "DoubleRowsKey", upper: ":", lower: ";" },
-        { type: "DoubleRowsKey", upper: "<", lower: "," },
-        { type: "DoubleRowsKey", upper: ">", lower: "." },
-        { type: "SingleRowKey", char: "P" },
-        { type: "SingleRowKey", char: "Y" },
-        { type: "SingleRowKey", char: "F" },
-        { type: "SingleRowKey", char: "G" },
-        { type: "SingleRowKey", char: "C" },
-        { type: "SingleRowKey", char: "R" },
-        { type: "SingleRowKey", char: "L" },
-        { type: "DoubleRowsKey", upper: "?", lower: "/" },
-        { type: "DoubleRowsKey", upper: "^", lower: "@" },
-        { type: "SpecialKey", name: "backslash" },
-        { type: "SpecialKey", name: "capslock" },
-        { type: "SingleRowKey", char: "A" },
-        { type: "SingleRowKey", char: "O" },
-        { type: "SingleRowKey", char: "E" },
-        { type: "SingleRowKey", char: "U" },
-        { type: "SingleRowKey", char: "I" },
-        { type: "SingleRowKey", char: "D" },
-        { type: "SingleRowKey", char: "H" },
-        { type: "SingleRowKey", char: "T" },
-        { type: "SingleRowKey", char: "N" },
-        { type: "SingleRowKey", char: "S" },
-        { type: "DoubleRowsKey", upper: "_", lower: "-" },
-        { type: "SpecialKey", name: "return" },
-        { type: "SpecialKey", name: "leftshift" },
-        { type: "DoubleRowsKey", upper: '"', lower: "'" },
-        { type: "SingleRowKey", char: "Q" },
-        { type: "SingleRowKey", char: "J" },
-        { type: "SingleRowKey", char: "K" },
-        { type: "SingleRowKey", char: "X" },
-        { type: "SingleRowKey", char: "B" },
-        { type: "SingleRowKey", char: "M" },
-        { type: "SingleRowKey", char: "W" },
-        { type: "SingleRowKey", char: "V" },
-        { type: "SingleRowKey", char: "Z" },
-        { type: "SpecialKey", name: "rightshift" },
-        { type: "SpecialKey", name: "leftctrl" },
-        { type: "SingleRowKey", char: "Alt" },
-        { type: "SpecialKey", name: "command" },
-        { type: "SpecialKey", name: "space" },
-        { type: "SpecialKey", name: "command" },
-        { type: "SingleRowKey", char: "Alt" },
-        { type: "SingleRowKey", char: "Ctrl" },
-        { type: "SingleRowKey", char: "Fn" },
-    ];
-
     // TODO: Is it really needed to use `useEffect`?
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {
             e.preventDefault();
 
-            setPressedKeys((keys) => keys.add(e.key.toLowerCase()));
+            setPressedKeys((keys) => keys.add(e.code));
         };
 
         const onKeyUp = (e: KeyboardEvent) => {
             e.preventDefault();
 
-            console.log(e.key, pressedKeys);
-
             setPressedKeys((keys) => {
-                keys.delete(e.key.toLowerCase());
+                keys.delete(e.code);
                 return keys;
             });
         };
@@ -146,22 +147,13 @@ export default function Keyboard() {
     const keyComponents = keys.map((x, i) => {
         switch (x.type) {
             case "SingleRowKey":
-                if (pressedKeys.has(x.char.toLowerCase())) {
-                    x.pressed = true;
-                }
-                return <SingleRowKey key={i} {...x} />;
+                x.pressed = pressedKeys.has(x.code);
+                return <SingleRowKey key={x.code} {...x} />;
             case "DoubleRowsKey":
-                if (
-                    pressedKeys.has(x.lower.toLowerCase()) ||
-                    pressedKeys.has(x.upper.toLowerCase())
-                ) {
-                    x.pressed = true;
-                }
-                return <DoubleRowsKey key={i} {...x} />;
+                x.pressed = pressedKeys.has(x.code);
+                return <DoubleRowsKey key={x.code} {...x} />;
             case "SpecialKey":
-                if (pressedKeys.has(x.name)) {
-                    x.pressed = true;
-                }
+                x.pressed = pressedKeys.has(x.code);
                 return <SpecialKey key={i} {...x} />;
         }
     });
@@ -175,12 +167,19 @@ export default function Keyboard() {
 
 function SingleRowKey({ char, pressed }: SingleRowKey) {
     const classes = styles.key + (pressed ? " " + styles.typed : "");
+
     return <div className={classes}>{char}</div>;
 }
 
-function DoubleRowsKey({ upper, lower }: DoubleRowsKey) {
+function DoubleRowsKey({ upper, lower, pressed }: DoubleRowsKey) {
+    const classes = [styles.key, styles["double-rows"]];
+
+    if (pressed) {
+        classes.push(styles.typed);
+    }
+
     return (
-        <div className={`${styles.key} ${styles["double-rows"]}`}>
+        <div className={classes.join(" ")}>
             {upper}
             <br />
             {lower}
@@ -188,16 +187,24 @@ function DoubleRowsKey({ upper, lower }: DoubleRowsKey) {
     );
 }
 
-function SpecialKey({ name }: SpecialKey) {
+function SpecialKey({ name, pressed }: SpecialKey) {
     let text;
     let css;
 
     switch (name) {
         case "backslash":
+            const classes = [
+                styles.key,
+                styles.backslash,
+                styles["double-rows"],
+            ];
+
+            if (pressed) {
+                classes.push(styles.typed);
+            }
+
             return (
-                <div
-                    className={`${styles.key} ${styles.backslash} ${styles["double-rows"]}`}
-                >
+                <div className={classes.join(" ")}>
                     |
                     <br />\
                 </div>
@@ -243,5 +250,11 @@ function SpecialKey({ name }: SpecialKey) {
             break;
     }
 
-    return <div className={`${styles.key} ${css}`}>{text}</div>;
+    const classes = [styles.key, css];
+
+    if (pressed) {
+        classes.push(styles.typed);
+    }
+
+    return <div className={classes.join(" ")}>{text}</div>;
 }
