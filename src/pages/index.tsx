@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Keyboard from "../../components/keyboard";
+import Display from "../../components/display";
 
 export default function Home() {
     return (
@@ -19,7 +20,10 @@ export default function Home() {
                 />
             </Head>
             <main>
-                <Keyboard />
+                <div className={styles["inner-container"]}>
+                    <Display />
+                    <Keyboard />
+                </div>
             </main>
         </>
     );

@@ -7,11 +7,9 @@
 
 .keyboard-base {
     max-width: 1085px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background-color: rgb(197, 197, 197);
     border-radius: 10px;
     display: grid;
