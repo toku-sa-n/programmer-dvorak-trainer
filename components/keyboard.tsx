@@ -144,15 +144,14 @@ export default function Keyboard() {
     }, [pressedKeys, setPressedKeys]);
 
     const keyComponents = keys.map((x, i) => {
+        x.pressed = pressedKeys.has(x.code);
+
         switch (x.type) {
             case "SingleRowKey":
-                x.pressed = pressedKeys.has(x.code);
                 return <SingleRowKey key={x.code} {...x} />;
             case "DoubleRowsKey":
-                x.pressed = pressedKeys.has(x.code);
                 return <DoubleRowsKey key={x.code} {...x} />;
             case "SpecialKey":
-                x.pressed = pressedKeys.has(x.code);
                 return <SpecialKey key={i} {...x} />;
         }
     });
