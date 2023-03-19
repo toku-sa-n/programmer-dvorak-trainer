@@ -10,13 +10,12 @@ class ExhaustiveError extends Error {
     }
 }
 
-type Key = SingleRowKey | DoubleRowsKey | SpecialKey;
+type Key = (SingleRowKey | DoubleRowsKey | SpecialKey) & { pressed?: boolean };
 
 type SingleRowKey = {
     readonly type: "SingleRowKey";
     readonly char: string;
     readonly code: string;
-    pressed?: boolean;
 };
 
 type DoubleRowsKey = {
@@ -24,14 +23,12 @@ type DoubleRowsKey = {
     readonly upper: string;
     readonly lower: string;
     readonly code: string;
-    pressed?: boolean;
 };
 
 type SpecialKey = {
     readonly type: "SpecialKey";
     readonly name: SpecialKeyName;
     readonly code: string;
-    pressed?: boolean;
 };
 
 type SpecialKeyName =
@@ -144,15 +141,14 @@ export default function Keyboard() {
     }, [pressedKeys, setPressedKeys]);
 
     const keyComponents = keys.map((x, i) => {
+        x.pressed = pressedKeys.has(x.code);
+
         switch (x.type) {
             case "SingleRowKey":
-                x.pressed = pressedKeys.has(x.code);
                 return <SingleRowKey key={x.code} {...x} />;
             case "DoubleRowsKey":
-                x.pressed = pressedKeys.has(x.code);
                 return <DoubleRowsKey key={x.code} {...x} />;
             case "SpecialKey":
-                x.pressed = pressedKeys.has(x.code);
                 return <SpecialKey key={i} {...x} />;
         }
     });
