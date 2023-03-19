@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Keyboard from "../../components/keyboard";
 import Display from "../../components/display";
+import Trainer from "../../components/trainer";
 
 export default function Home() {
     return (
@@ -21,8 +22,7 @@ export default function Home() {
             </Head>
             <main>
                 <div className={styles["inner-container"]}>
-                    <Display />
-                    <Keyboard />
+                    <Trainer />
                 </div>
             </main>
         </>
