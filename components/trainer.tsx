@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Display from "./display";
 import Keyboard from "./keyboard";
 
-const original = "e=2.7";
+const original = 'int main(void){printf("hello world");return 0;}';
 
 export default function Trainer() {
     const [text, setText] = useState(original);
@@ -30,7 +30,7 @@ export default function Trainer() {
     return (
         <>
             <Display text={text} />
-            <Keyboard />
+            <Keyboard next={text[0]} />
         </>
     );
 }

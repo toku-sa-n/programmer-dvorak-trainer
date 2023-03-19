@@ -36,6 +36,10 @@
     border: 1px solid #eeeeee;
 }
 
+.next {
+    background: yellowgreen;
+}
+
 .key:hover {
     border: 1px solid #eeeeee;
 }

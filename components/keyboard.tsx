@@ -2,6 +2,7 @@ import { useImmer } from "use-immer";
 import { enableMapSet } from "immer";
 import { useEffect, useState } from "react";
 import styles from "./keyboard.module.css";
+import next from "next";
 
 // The license for this class is at `/licenses/YYTypeScript`.
 class ExhaustiveError extends Error {
@@ -17,6 +18,7 @@ type SingleRowKey = {
     readonly char: string;
     readonly code: string;
     pressed?: boolean;
+    nextKey?: string;
 };
 
 type DoubleRowsKey = {
@@ -25,6 +27,7 @@ type DoubleRowsKey = {
     readonly lower: string;
     readonly code: string;
     pressed?: boolean;
+    nextKey?: string;
 };
 
 type SpecialKey = {
@@ -32,6 +35,7 @@ type SpecialKey = {
     readonly name: SpecialKeyName;
     readonly code: string;
     pressed?: boolean;
+    nextKey?: string;
 };
 
 type SpecialKeyName =
@@ -111,7 +115,7 @@ const keys: Array<Key> = [
 ];
 
 // The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
-export default function Keyboard() {
+export default function Keyboard({ next }: { next: string }) {
     // TODO: Is it okay to call this here?
     enableMapSet();
 
@@ -145,6 +149,7 @@ export default function Keyboard() {
 
     const keyComponents = keys.map((x, i) => {
         x.pressed = pressedKeys.has(x.code);
+        x.nextKey = next;
 
         switch (x.type) {
             case "SingleRowKey":
@@ -163,17 +168,33 @@ export default function Keyboard() {
     );
 }
 
-function SingleRowKey({ char, pressed }: SingleRowKey) {
-    const classes = styles.key + (pressed ? " " + styles.typed : "");
+function SingleRowKey({ char, pressed, nextKey }: SingleRowKey) {
+    const classes = [styles.key];
 
-    return <div className={classes}>{char}</div>;
+    if (pressed) {
+        classes.push(styles.typed);
+    }
+    if (char.toUpperCase() === nextKey?.toUpperCase()) {
+        classes.push(styles.next);
+    }
+
+    return <div className={classes.join(" ")}>{char}</div>;
 }
 
-function DoubleRowsKey({ upper, lower, pressed }: DoubleRowsKey) {
+function DoubleRowsKey({ upper, lower, pressed, nextKey }: DoubleRowsKey) {
     const classes = [styles.key, styles["double-rows"]];
 
     if (pressed) {
         classes.push(styles.typed);
+    }
+
+    if (
+        nextKey &&
+        [upper.toUpperCase(), lower.toUpperCase()].includes(
+            nextKey.toUpperCase()
+        )
+    ) {
+        classes.push(styles.next);
     }
 
     return (
@@ -185,7 +206,7 @@ function DoubleRowsKey({ upper, lower, pressed }: DoubleRowsKey) {
     );
 }
 
-function SpecialKey({ name, pressed }: SpecialKey) {
+function SpecialKey({ name, pressed, nextKey }: SpecialKey) {
     let text;
     let css;
 
@@ -223,10 +244,26 @@ function SpecialKey({ name, pressed }: SpecialKey) {
             text = "Ctrl";
             css = styles.leftctrl;
             break;
-        case "leftshift":
+        case "leftshift": {
             text = "Shift";
             css = styles.leftshift;
+
+            const isUpper =
+                keys.find(
+                    (x) => x.type === "DoubleRowsKey" && x.upper === nextKey
+                ) !== undefined;
+
+            if (
+                isUpper ||
+                (nextKey &&
+                    (isNumeric(nextKey) ||
+                        (isAlphabet(nextKey) &&
+                            nextKey === nextKey.toUpperCase())))
+            ) {
+                css += " " + styles.next;
+            }
             break;
+        }
         case "return":
             text = "Return";
             css = styles.return;
@@ -234,10 +271,29 @@ function SpecialKey({ name, pressed }: SpecialKey) {
         case "rightshift":
             text = "Shift";
             css = styles.rightshift;
+
+            const isUpper =
+                keys.find(
+                    (x) => x.type === "DoubleRowsKey" && x.upper === nextKey
+                ) !== undefined;
+
+            if (
+                isUpper ||
+                (nextKey &&
+                    (isNumeric(nextKey) ||
+                        (isAlphabet(nextKey) &&
+                            nextKey === nextKey.toUpperCase())))
+            ) {
+                css += " " + styles.next;
+            }
             break;
         case "space":
             text = "Space";
             css = styles.space;
+
+            if (nextKey === " ") {
+                css += " " + styles.next;
+            }
             break;
         case "tab":
             text = "Tab";
@@ -255,4 +311,16 @@ function SpecialKey({ name, pressed }: SpecialKey) {
     }
 
     return <div className={classes.join(" ")}>{text}</div>;
+}
+
+function isNumeric(c: string): boolean {
+    const code = c.charCodeAt(0);
+
+    return code > 47 && code < 58;
+}
+
+function isAlphabet(c: string): boolean {
+    const code = c.charCodeAt(0);
+
+    return (code > 64 && code < 91) || (code > 96 && code < 123);
 }
