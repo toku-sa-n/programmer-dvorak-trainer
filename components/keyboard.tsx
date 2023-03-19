@@ -1,4 +1,3 @@
-import { Press_Start_2P } from "next/font/google";
 import { useImmer } from "use-immer";
 import { enableMapSet } from "immer";
 import { useEffect, useState } from "react";
