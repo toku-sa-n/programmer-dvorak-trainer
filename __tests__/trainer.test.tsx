@@ -7,6 +7,9 @@ import { expect } from "@jest/globals";
 import "@testing-library/jest-dom/extend-expect";
 import React from "react";
 import Trainer from "../components/trainer";
+import { mockRandomForEach } from "jest-mock-random";
+
+mockRandomForEach([0.2]);
 
 test("The next key is highlighted", () => {
     render(<Trainer />);
