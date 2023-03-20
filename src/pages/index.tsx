@@ -1,10 +1,6 @@
 import styles from "@/styles/Home.module.css";
-import { Inter } from "next/font/google";
 import Head from "next/head";
-import Image from "next/image";
 
-import Display from "../../components/display";
-import Keyboard from "../../components/keyboard";
 import Trainer from "../../components/trainer";
 
 export default function Home() {
