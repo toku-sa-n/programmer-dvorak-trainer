@@ -8,6 +8,14 @@ import "@testing-library/jest-dom/extend-expect";
 import React from "react";
 import Trainer from "../components/trainer";
 
+test("The next key is highlighted", () => {
+    render(<Trainer />);
+
+    const key = screen.getByText("I");
+
+    expect(key.classList).toContain("next");
+});
+
 test("Typing the correct key shifts the text", () => {
     render(<Trainer />);
 
