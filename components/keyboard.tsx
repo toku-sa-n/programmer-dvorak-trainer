@@ -1,8 +1,10 @@
-import { useImmer } from "use-immer";
-import { enableMapSet } from "immer";
 import { useEffect, useState } from "react";
-import styles from "./keyboard.module.css";
+
+import { enableMapSet } from "immer";
 import next from "next";
+import { useImmer } from "use-immer";
+
+import styles from "./keyboard.module.css";
 
 // The license for this class is at `/licenses/YYTypeScript`.
 class ExhaustiveError extends Error {

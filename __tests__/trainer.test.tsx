@@ -13,37 +13,40 @@ import Trainer from "../components/trainer";
 mockRandomForEach([0.1]);
 
 test("The next key is highlighted", () => {
-  render(<Trainer />);
+    render(<Trainer />);
 
-  const key = screen.getByText("I");
+    const key = screen.getByText("I");
 
-  expect(key.classList).toContain("next");
+    expect(key.classList).toContain("next");
 });
 
 test("Typing the correct key shifts the text", () => {
-  render(<Trainer />);
+    render(<Trainer />);
 
-  const text = screen.getByText(
-    'int main(void){printf("hello world");return 0;}'
-  );
+    const text = screen.getByText(
+        'int main(void){printf("hello world");return 0;}'
+    );
 
-  userEvent.keyboard("i");
+    userEvent.keyboard("i");
 
-  expect(text.textContent).toBe(
-    'nt main(void){printf("hello world");return 0;}'.replace(/ /g, "\u00A0")
-  );
+    expect(text.textContent).toBe(
+        'nt main(void){printf("hello world");return 0;}'.replace(/ /g, "\u00A0")
+    );
 });
 
 test("Typing the wrong key does not shift the text", () => {
-  render(<Trainer />);
+    render(<Trainer />);
 
-  const text = screen.getByText(
-    'int main(void){printf("hello world");return 0;}'
-  );
+    const text = screen.getByText(
+        'int main(void){printf("hello world");return 0;}'
+    );
 
-  userEvent.keyboard("a");
+    userEvent.keyboard("a");
 
-  expect(text.textContent).toBe(
-    'int main(void){printf("hello world");return 0;}'.replace(/ /g, "\u00A0")
-  );
+    expect(text.textContent).toBe(
+        'int main(void){printf("hello world");return 0;}'.replace(
+            / /g,
+            "\u00A0"
+        )
+    );
 });

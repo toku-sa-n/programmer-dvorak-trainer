@@ -1,4 +1,5 @@
 {
-  "importOrder": ["^react$", "<THIRD_PARTY_MODULES>", "^[./]"],
-  "importOrderSeparation": true
+    "importOrder": ["^react$", "<THIRD_PARTY_MODULES>", "^[./]"],
+    "importOrderSeparation": true,
+    "tabWidth": 4
 }
