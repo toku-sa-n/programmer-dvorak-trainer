@@ -24,3 +24,6 @@ jobs:
 
             - name: Lint
               run: npx eslint .
+
+            - name: Check the format
+              run: npx prettier --check .
