@@ -21,3 +21,20 @@ test("Typing the correct key shifts the text", () => {
         'nt main(void){printf("hello world");return 0;}'.replace(/ /g, "\u00A0")
     );
 });
+
+test("Typing the wrong key does not shift the text", () => {
+    render(<Trainer />);
+
+    const text = screen.getByText(
+        'int main(void){printf("hello world");return 0;}'
+    );
+
+    userEvent.keyboard("a");
+
+    expect(text.textContent).toBe(
+        'int main(void){printf("hello world");return 0;}'.replace(
+            / /g,
+            "\u00A0"
+        )
+    );
+});
