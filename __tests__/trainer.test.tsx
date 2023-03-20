@@ -9,7 +9,7 @@ import React from "react";
 import Trainer from "../components/trainer";
 import { mockRandomForEach } from "jest-mock-random";
 
-mockRandomForEach([0.2]);
+mockRandomForEach([0.1]);
 
 test("The next key is highlighted", () => {
     render(<Trainer />);
