@@ -30,9 +30,9 @@ export default function Trainer() {
             setText((text) => {
                 if (text.length === 1) {
                     return choice();
-                } else {
-                    return text.slice(1);
                 }
+
+                return text.slice(1);
             });
         }
 
