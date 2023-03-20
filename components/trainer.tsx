@@ -4,9 +4,13 @@ import Keyboard from "./keyboard";
 
 const original = [
     'int main(void){printf("hello world");return 0;}',
-    "e=2.718281828459045235360287471352662497757247093699959574966967627724076630353",
-    "pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679",
+    "e=2.7182818284",
+    "pi=3.1415926535",
     "int euclid(int a,int b){if(a==1){return b;}else{return euclid(b,a%b);}",
+    "function choice(){return original[Math.floor(Math.random()*original.length)];}",
+    "main::IO()",
+    "sudo rm -rf --no-preserve-root",
+    "man ls",
 ];
 
 function choice() {
