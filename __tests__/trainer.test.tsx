@@ -6,11 +6,11 @@ import { expect } from "@jest/globals";
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockRandomForEach } from "jest-mock-random";
+import { mockRandom } from "jest-mock-random";
 
 import Trainer from "../components/trainer";
 
-mockRandomForEach([0.1]);
+mockRandom(0.1);
 
 test("The next key is highlighted", () => {
     render(<Trainer />);
@@ -42,6 +42,24 @@ test("Typing the wrong key does not shift the text", () => {
     );
 
     userEvent.keyboard("a");
+
+    expect(text.textContent).toBe(
+        'int main(void){printf("hello world");return 0;}'.replace(
+            / /g,
+            "\u00A0"
+        )
+    );
+});
+
+// The same statement is returned as the next one as `Math.random` is mocked to return a fixed value, although in reality the next statement is selected at random.
+test("Typing the last character shows the next sentence", () => {
+    render(<Trainer />);
+
+    const text = screen.getByText(
+        'int main(void){printf("hello world");return 0;}'
+    );
+
+    userEvent.keyboard('int main(void){{printf("hello world");return 0;}}');
 
     expect(text.textContent).toBe(
         'int main(void){printf("hello world");return 0;}'.replace(
