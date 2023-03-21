@@ -1,16 +1,10 @@
 import { useEffect } from "react";
 
+import ExhaustiveError from "@/ExhausitiveError";
 import { enableMapSet } from "immer";
 import { useImmer } from "use-immer";
 
 import styles from "./keyboard.module.css";
-
-// The license for this class is at `/licenses/YYTypeScript`.
-class ExhaustiveError extends Error {
-    constructor(value: never, message = `Unsupported type: ${value}`) {
-        super(message);
-    }
-}
 
 type Key = SingleRowKey | DoubleRowsKey | SpecialKey;
 
