@@ -9,6 +9,7 @@ import userEvent from "@testing-library/user-event";
 import { mockRandom } from "jest-mock-random";
 
 import Trainer from "../components/trainer";
+import escapeSpace from "../utils/escapeSpace";
 
 mockRandom(0.1);
 
@@ -31,10 +32,7 @@ describe("On typing the correct key", () => {
         userEvent.keyboard("i");
 
         expect(text.textContent).toBe(
-            'nt main(void){printf("hello world");return 0;}'.replace(
-                / /g,
-                "\u00A0"
-            )
+            escapeSpace('nt main(void){printf("hello world");return 0;}')
         );
     });
 
@@ -61,10 +59,7 @@ describe("On typing the correct key", () => {
         userEvent.keyboard('int main(void){{printf("hello world");return 0;}}');
 
         expect(text.textContent).toBe(
-            'int main(void){printf("hello world");return 0;}'.replace(
-                / /g,
-                "\u00A0"
-            )
+            escapeSpace('int main(void){printf("hello world");return 0;}')
         );
     });
 });
@@ -80,10 +75,7 @@ describe("On typing the wrong key", () => {
         userEvent.keyboard("a");
 
         expect(text.textContent).toBe(
-            'int main(void){printf("hello world");return 0;}'.replace(
-                / /g,
-                "\u00A0"
-            )
+            escapeSpace('int main(void){printf("hello world");return 0;}')
         );
     });
 
