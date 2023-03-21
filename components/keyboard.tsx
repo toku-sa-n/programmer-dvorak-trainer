@@ -159,6 +159,8 @@ export default function Keyboard({ next }: { next: string }) {
                 return <DoubleRowsKey key={x.code} {...x} />;
             case "SpecialKey":
                 return <SpecialKey key={x.code} {...x} />;
+            default:
+                throw new ExhaustiveError(x);
         }
     });
 
