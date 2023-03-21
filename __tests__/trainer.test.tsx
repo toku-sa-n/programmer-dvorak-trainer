@@ -47,6 +47,26 @@ describe("On typing the correct key", () => {
 
         expect(key.classList).toContain("next");
     });
+
+    // The same statement is returned as the next one as `Math.random` is
+    // mocked to return a fixed value, although in reality the next statement
+    // is selected at random.
+    test("Typing the last character shows the next sentence", () => {
+        render(<Trainer />);
+
+        const text = screen.getByText(
+            'int main(void){printf("hello world");return 0;}'
+        );
+
+        userEvent.keyboard('int main(void){{printf("hello world");return 0;}}');
+
+        expect(text.textContent).toBe(
+            'int main(void){printf("hello world");return 0;}'.replace(
+                / /g,
+                "\u00A0"
+            )
+        );
+    });
 });
 
 describe("On typing the wrong key", () => {
@@ -76,22 +96,4 @@ describe("On typing the wrong key", () => {
 
         expect(key.classList).toContain("next");
     });
-});
-
-// The same statement is returned as the next one as `Math.random` is mocked to return a fixed value, although in reality the next statement is selected at random.
-test("Typing the last character shows the next sentence", () => {
-    render(<Trainer />);
-
-    const text = screen.getByText(
-        'int main(void){printf("hello world");return 0;}'
-    );
-
-    userEvent.keyboard('int main(void){{printf("hello world");return 0;}}');
-
-    expect(text.textContent).toBe(
-        'int main(void){printf("hello world");return 0;}'.replace(
-            / /g,
-            "\u00A0"
-        )
-    );
 });
