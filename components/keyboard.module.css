@@ -40,10 +40,6 @@
     background: yellowgreen;
 }
 
-.key:hover {
-    border: 1px solid #eeeeee;
-}
-
 .delete {
     grid-column: span 4;
 }
