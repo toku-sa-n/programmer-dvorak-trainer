@@ -8,6 +8,7 @@ const original = [
     'int main(void){printf("hello world");return 0;}',
     "e=2.7182818284",
     "pi=3.1415926535",
+    "int power(int base,int exp){int result;for(result=1;exp>0;exp--){result*=base;}return result;}",
     "function choice(){return original[Math.floor(Math.random()*original.length)];}",
     "main::IO()",
     "man ls",
