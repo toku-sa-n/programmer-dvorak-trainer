@@ -148,7 +148,7 @@ export default function Keyboard({ next }: { next: string }) {
         };
     }, [pressedKeys, setPressedKeys]);
 
-    const keyComponents = keys.map((x, i) => {
+    const keyComponents = keys.map((x) => {
         x.pressed = pressedKeys.has(x.code);
         x.nextKey = next;
 
