@@ -8,10 +8,8 @@ const original = [
     'int main(void){printf("hello world");return 0;}',
     "e=2.7182818284",
     "pi=3.1415926535",
-    "int euclid(int a,int b){if(a==1){return b;}else{return euclid(b,a%b);}",
     "function choice(){return original[Math.floor(Math.random()*original.length)];}",
     "main::IO()",
-    "sudo rm -rf --no-preserve-root",
     "man ls",
 ];
 
