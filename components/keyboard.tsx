@@ -18,8 +18,12 @@ type SingleRowKey = {
     readonly type: "SingleRowKey";
     readonly char: string;
     readonly code: string;
-    pressed?: boolean;
-    nextKey?: string;
+};
+
+type SingleRowKeyProps = {
+    readonly char: string;
+    readonly pressed: boolean;
+    readonly nextKey: string;
 };
 
 type DoubleRowsKey = {
@@ -27,16 +31,25 @@ type DoubleRowsKey = {
     readonly upper: string;
     readonly lower: string;
     readonly code: string;
-    pressed?: boolean;
-    nextKey?: string;
+};
+
+type DoubleRowsKeyProps = {
+    readonly upper: string;
+    readonly lower: string;
+    readonly pressed: boolean;
+    readonly nextKey: string;
 };
 
 type SpecialKey = {
     readonly type: "SpecialKey";
     readonly name: SpecialKeyName;
     readonly code: string;
-    pressed?: boolean;
-    nextKey?: string;
+};
+
+type SpecialKeyProps = {
+    readonly name: SpecialKeyName;
+    readonly pressed: boolean;
+    readonly nextKey: string;
 };
 
 type SpecialKeyName =
@@ -149,16 +162,35 @@ export default function Keyboard({ next }: { next: string }) {
     }, [pressedKeys, setPressedKeys]);
 
     const keyComponents = keys.map((x) => {
-        x.pressed = pressedKeys.has(x.code);
-        x.nextKey = next;
-
         switch (x.type) {
             case "SingleRowKey":
-                return <SingleRowKey key={x.code} {...x} />;
+                return (
+                    <SingleRowKey
+                        key={x.code}
+                        pressed={pressedKeys.has(x.code)}
+                        nextKey={next}
+                        char={x.char}
+                    />
+                );
             case "DoubleRowsKey":
-                return <DoubleRowsKey key={x.code} {...x} />;
+                return (
+                    <DoubleRowsKey
+                        key={x.code}
+                        upper={x.upper}
+                        lower={x.lower}
+                        pressed={pressedKeys.has(x.code)}
+                        nextKey={next}
+                    />
+                );
             case "SpecialKey":
-                return <SpecialKey key={x.code} {...x} />;
+                return (
+                    <SpecialKey
+                        key={x.code}
+                        name={x.name}
+                        pressed={pressedKeys.has(x.code)}
+                        nextKey={next}
+                    />
+                );
             default:
                 throw new ExhaustiveError(x);
         }
@@ -171,7 +203,7 @@ export default function Keyboard({ next }: { next: string }) {
     );
 }
 
-function SingleRowKey({ char, pressed, nextKey }: SingleRowKey) {
+function SingleRowKey({ char, pressed, nextKey }: SingleRowKeyProps) {
     const classes = [styles.key];
 
     if (pressed) {
@@ -184,7 +216,7 @@ function SingleRowKey({ char, pressed, nextKey }: SingleRowKey) {
     return <div className={classes.join(" ")}>{char}</div>;
 }
 
-function DoubleRowsKey({ upper, lower, pressed, nextKey }: DoubleRowsKey) {
+function DoubleRowsKey({ upper, lower, pressed, nextKey }: DoubleRowsKeyProps) {
     const classes = [styles.key, styles["double-rows"]];
 
     if (pressed) {
@@ -209,7 +241,7 @@ function DoubleRowsKey({ upper, lower, pressed, nextKey }: DoubleRowsKey) {
     );
 }
 
-function SpecialKey({ name, pressed, nextKey }: SpecialKey) {
+function SpecialKey({ name, pressed, nextKey }: SpecialKeyProps) {
     let text;
     let css;
 
