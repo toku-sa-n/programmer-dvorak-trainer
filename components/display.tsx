@@ -1,6 +1,6 @@
 import { Source_Code_Pro } from "next/font/google";
 
-import escapeSpace from "../utils/escapeSpace";
+import escapeSpace from "../src/escapeSpace";
 import styles from "./display.module.css";
 
 const sourceCodePro = Source_Code_Pro({
