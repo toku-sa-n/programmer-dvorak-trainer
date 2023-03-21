@@ -126,7 +126,7 @@ const keys: Array<Key> = [
     { type: "SingleRowKey", char: "Alt", code: "AltRight" },
     { type: "SingleRowKey", char: "Ctrl", code: "ControlRight" },
     { type: "SingleRowKey", char: "Fn", code: "asdpogasdpguh" }, // TODO: No code is assigned to the "Fn" key. Is just a empty string ok?
-];
+] as const;
 
 // The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
 export default function Keyboard({ next }: { next: string }) {
