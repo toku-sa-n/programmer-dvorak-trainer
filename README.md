@@ -1,6 +1,6 @@
 # Programmer Dvorak trainer
 
-## Installation
+## Running
 
 ```sh
 git clone https://github.com/toku-sa-n/programmer-dvorak-trainer.git
