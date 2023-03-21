@@ -12,12 +12,14 @@ type SingleRowKey = {
     readonly type: "SingleRowKey";
     readonly char: string;
     readonly code: string;
+    readonly isHomePosition: boolean;
 };
 
 type SingleRowKeyProps = {
     readonly char: string;
     readonly pressed: boolean;
     readonly nextKey: string;
+    readonly isHomePosition: boolean;
 };
 
 type DoubleRowsKey = {
@@ -77,49 +79,69 @@ const keys: Array<Key> = [
     { type: "DoubleRowsKey", upper: ":", lower: ";", code: "KeyQ" },
     { type: "DoubleRowsKey", upper: "<", lower: ",", code: "KeyW" },
     { type: "DoubleRowsKey", upper: ">", lower: ".", code: "KeyE" },
-    { type: "SingleRowKey", char: "P", code: "KeyR" },
-    { type: "SingleRowKey", char: "Y", code: "KeyT" },
-    { type: "SingleRowKey", char: "F", code: "KeyY" },
-    { type: "SingleRowKey", char: "G", code: "KeyU" },
-    { type: "SingleRowKey", char: "C", code: "KeyI" },
-    { type: "SingleRowKey", char: "R", code: "KeyO" },
-    { type: "SingleRowKey", char: "L", code: "KeyP" },
+    { type: "SingleRowKey", char: "P", code: "KeyR", isHomePosition: false },
+    { type: "SingleRowKey", char: "Y", code: "KeyT", isHomePosition: false },
+    { type: "SingleRowKey", char: "F", code: "KeyY", isHomePosition: false },
+    { type: "SingleRowKey", char: "G", code: "KeyU", isHomePosition: false },
+    { type: "SingleRowKey", char: "C", code: "KeyI", isHomePosition: false },
+    { type: "SingleRowKey", char: "R", code: "KeyO", isHomePosition: false },
+    { type: "SingleRowKey", char: "L", code: "KeyP", isHomePosition: false },
     { type: "DoubleRowsKey", upper: "?", lower: "/", code: "BracketLeft" },
     { type: "DoubleRowsKey", upper: "^", lower: "@", code: "BracketRight" },
     { type: "SpecialKey", name: "backslash", code: "Backslash" },
     { type: "SpecialKey", name: "capslock", code: "CapsLock" },
-    { type: "SingleRowKey", char: "A", code: "KeyA" },
-    { type: "SingleRowKey", char: "O", code: "KeyS" },
-    { type: "SingleRowKey", char: "E", code: "KeyD" },
-    { type: "SingleRowKey", char: "U", code: "KeyF" },
-    { type: "SingleRowKey", char: "I", code: "KeyG" },
-    { type: "SingleRowKey", char: "D", code: "KeyH" },
-    { type: "SingleRowKey", char: "H", code: "KeyJ" },
-    { type: "SingleRowKey", char: "T", code: "KeyK" },
-    { type: "SingleRowKey", char: "N", code: "KeyL" },
+    { type: "SingleRowKey", char: "A", code: "KeyA", isHomePosition: false },
+    { type: "SingleRowKey", char: "O", code: "KeyS", isHomePosition: false },
+    { type: "SingleRowKey", char: "E", code: "KeyD", isHomePosition: false },
+    { type: "SingleRowKey", char: "U", code: "KeyF", isHomePosition: true },
+    { type: "SingleRowKey", char: "I", code: "KeyG", isHomePosition: false },
+    { type: "SingleRowKey", char: "D", code: "KeyH", isHomePosition: false },
+    { type: "SingleRowKey", char: "H", code: "KeyJ", isHomePosition: true },
+    { type: "SingleRowKey", char: "T", code: "KeyK", isHomePosition: false },
+    { type: "SingleRowKey", char: "N", code: "KeyL", isHomePosition: false },
     { type: "SingleRowKey", char: "S", code: "Semicolon" },
     { type: "DoubleRowsKey", upper: "_", lower: "-", code: "Quote" },
     { type: "SpecialKey", name: "return", code: "Enter" },
     { type: "SpecialKey", name: "leftshift", code: "ShiftLeft" },
     { type: "DoubleRowsKey", upper: '"', lower: "'", code: "KeyZ" },
-    { type: "SingleRowKey", char: "Q", code: "KeyX" },
-    { type: "SingleRowKey", char: "J", code: "KeyC" },
-    { type: "SingleRowKey", char: "K", code: "KeyV" },
-    { type: "SingleRowKey", char: "X", code: "KeyB" },
-    { type: "SingleRowKey", char: "B", code: "KeyN" },
-    { type: "SingleRowKey", char: "M", code: "KeyM" },
-    { type: "SingleRowKey", char: "W", code: "Comma" },
-    { type: "SingleRowKey", char: "V", code: "Period" },
-    { type: "SingleRowKey", char: "Z", code: "Slash" },
+    { type: "SingleRowKey", char: "Q", code: "KeyX", isHomePosition: false },
+    { type: "SingleRowKey", char: "J", code: "KeyC", isHomePosition: false },
+    { type: "SingleRowKey", char: "K", code: "KeyV", isHomePosition: false },
+    { type: "SingleRowKey", char: "X", code: "KeyB", isHomePosition: false },
+    { type: "SingleRowKey", char: "B", code: "KeyN", isHomePosition: false },
+    { type: "SingleRowKey", char: "M", code: "KeyM", isHomePosition: false },
+    { type: "SingleRowKey", char: "W", code: "Comma", isHomePosition: false },
+    { type: "SingleRowKey", char: "V", code: "Period", isHomePosition: false },
+    { type: "SingleRowKey", char: "Z", code: "Slash", isHomePosition: false },
     { type: "SpecialKey", name: "rightshift", code: "ShiftRight" },
     { type: "SpecialKey", name: "leftctrl", code: "ControlLeft" },
-    { type: "SingleRowKey", char: "Alt", code: "AltLeft" },
+    {
+        type: "SingleRowKey",
+        char: "Alt",
+        code: "AltLeft",
+        isHomePosition: false,
+    },
     { type: "SpecialKey", name: "command", code: "OSLeft" },
     { type: "SpecialKey", name: "space", code: "Space" },
     { type: "SpecialKey", name: "command", code: "OSRight" },
-    { type: "SingleRowKey", char: "Alt", code: "AltRight" },
-    { type: "SingleRowKey", char: "Ctrl", code: "ControlRight" },
-    { type: "SingleRowKey", char: "Fn", code: "asdpogasdpguh" }, // TODO: No code is assigned to the "Fn" key. Is just a empty string ok?
+    {
+        type: "SingleRowKey",
+        char: "Alt",
+        code: "AltRight",
+        isHomePosition: false,
+    },
+    {
+        type: "SingleRowKey",
+        char: "Ctrl",
+        code: "ControlRight",
+        isHomePosition: false,
+    },
+    {
+        type: "SingleRowKey",
+        char: "Fn",
+        code: "asdpogasdpguh",
+        isHomePosition: false,
+    }, // TODO: No code is assigned to the "Fn" key. Is just a empty string ok?
 ] as const;
 
 // The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
@@ -164,6 +186,7 @@ export default function Keyboard({ next }: { next: string }) {
                         pressed={pressedKeys.has(x.code)}
                         nextKey={next}
                         char={x.char}
+                        isHomePosition={x.isHomePosition}
                     />
                 );
             case "DoubleRowsKey":
@@ -197,14 +220,24 @@ export default function Keyboard({ next }: { next: string }) {
     );
 }
 
-function SingleRowKey({ char, pressed, nextKey }: SingleRowKeyProps) {
+function SingleRowKey({
+    char,
+    pressed,
+    nextKey,
+    isHomePosition,
+}: SingleRowKeyProps) {
     const classes = [styles.key];
 
     if (pressed) {
         classes.push(styles.typed);
     }
+
     if (char.toUpperCase() === nextKey?.toUpperCase()) {
         classes.push(styles.next);
+    }
+
+    if (isHomePosition) {
+        classes.push(styles["home-position"]);
     }
 
     return <div className={classes.join(" ")}>{char}</div>;

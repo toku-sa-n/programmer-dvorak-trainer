@@ -28,6 +28,10 @@
     padding-top: 17px;
 }
 
+.home-position {
+    text-decoration: underline;
+}
+
 .double-rows {
     padding-top: 0;
 }
