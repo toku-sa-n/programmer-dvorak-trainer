@@ -212,7 +212,7 @@ function SpecialKey({ name, pressed, nextKey }: SpecialKey) {
     let css;
 
     switch (name) {
-        case "backslash":
+        case "backslash": {
             const classes = [
                 styles.key,
                 styles.backslash,
@@ -229,6 +229,7 @@ function SpecialKey({ name, pressed, nextKey }: SpecialKey) {
                     <br />\
                 </div>
             );
+        }
         case "capslock":
             text = "CapsLock";
             css = styles.capslock;
