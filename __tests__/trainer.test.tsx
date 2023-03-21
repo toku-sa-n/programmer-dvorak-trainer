@@ -20,35 +20,62 @@ test("The next key is highlighted", () => {
     expect(key.classList).toContain("next");
 });
 
-test("Typing the correct key shifts the text", () => {
-    render(<Trainer />);
+describe("On typing the correct key", () => {
+    test("Shifts the text to type by a character", () => {
+        render(<Trainer />);
 
-    const text = screen.getByText(
-        'int main(void){printf("hello world");return 0;}'
-    );
+        const text = screen.getByText(
+            'int main(void){printf("hello world");return 0;}'
+        );
 
-    userEvent.keyboard("i");
+        userEvent.keyboard("i");
 
-    expect(text.textContent).toBe(
-        'nt main(void){printf("hello world");return 0;}'.replace(/ /g, "\u00A0")
-    );
+        expect(text.textContent).toBe(
+            'nt main(void){printf("hello world");return 0;}'.replace(
+                / /g,
+                "\u00A0"
+            )
+        );
+    });
+
+    test("The next key is highlighted.", () => {
+        render(<Trainer />);
+
+        userEvent.keyboard("i");
+
+        const key = screen.getByText("N");
+
+        expect(key.classList).toContain("next");
+    });
 });
 
-test("Typing the wrong key does not shift the text", () => {
-    render(<Trainer />);
+describe("On typing the wrong key", () => {
+    test("It does not shift the text", () => {
+        render(<Trainer />);
 
-    const text = screen.getByText(
-        'int main(void){printf("hello world");return 0;}'
-    );
+        const text = screen.getByText(
+            'int main(void){printf("hello world");return 0;}'
+        );
 
-    userEvent.keyboard("a");
+        userEvent.keyboard("a");
 
-    expect(text.textContent).toBe(
-        'int main(void){printf("hello world");return 0;}'.replace(
-            / /g,
-            "\u00A0"
-        )
-    );
+        expect(text.textContent).toBe(
+            'int main(void){printf("hello world");return 0;}'.replace(
+                / /g,
+                "\u00A0"
+            )
+        );
+    });
+
+    test("The next key is highlighted.", () => {
+        render(<Trainer />);
+
+        userEvent.keyboard("a");
+
+        const key = screen.getByText("I");
+
+        expect(key.classList).toContain("next");
+    });
 });
 
 // The same statement is returned as the next one as `Math.random` is mocked to return a fixed value, although in reality the next statement is selected at random.
