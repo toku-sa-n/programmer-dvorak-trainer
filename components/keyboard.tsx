@@ -60,7 +60,7 @@ type SpecialKeyName =
     | "space"
     | "tab";
 
-const keys: Array<Key> = [
+const keys: ReadonlyArray<Key> = [
     { type: "DoubleRowsKey", upper: "~", lower: "$", code: "Backquote" },
     { type: "DoubleRowsKey", upper: "%", lower: "&", code: "Digit1" },
     { type: "DoubleRowsKey", upper: "7", lower: "[", code: "Digit2" },
