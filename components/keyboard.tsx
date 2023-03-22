@@ -99,7 +99,12 @@ const keys: Array<Key> = [
     { type: "SingleRowKey", char: "H", code: "KeyJ", isHomePosition: true },
     { type: "SingleRowKey", char: "T", code: "KeyK", isHomePosition: false },
     { type: "SingleRowKey", char: "N", code: "KeyL", isHomePosition: false },
-    { type: "SingleRowKey", char: "S", code: "Semicolon" },
+    {
+        type: "SingleRowKey",
+        char: "S",
+        code: "Semicolon",
+        isHomePosition: false,
+    },
     { type: "DoubleRowsKey", upper: "_", lower: "-", code: "Quote" },
     { type: "SpecialKey", name: "return", code: "Enter" },
     { type: "SpecialKey", name: "leftshift", code: "ShiftLeft" },
