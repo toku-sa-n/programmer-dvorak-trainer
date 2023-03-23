@@ -363,12 +363,6 @@ function SpecialKey({ name, pressed, nextKey }: SpecialKeyProps) {
     return <div className={classes.join(" ")}>{text}</div>;
 }
 
-function isNumeric(c: string): boolean {
-    const code = c.charCodeAt(0);
-
-    return code > 47 && code < 58;
-}
-
 function isAlphabet(c: string): boolean {
     const code = c.charCodeAt(0);
 
