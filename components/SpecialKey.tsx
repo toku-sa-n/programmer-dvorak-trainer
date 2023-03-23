@@ -1,17 +1,6 @@
+import SpecialKeyName from "../libs/SpecialKeyName";
 import keys from "../libs/keys";
 import styles from "./keyboard.module.css";
-
-type SpecialKeyName =
-    | "backslash"
-    | "capslock"
-    | "command"
-    | "delete"
-    | "leftctrl"
-    | "leftshift"
-    | "return"
-    | "rightshift"
-    | "space"
-    | "tab";
 
 type SpecialKeyProps = {
     readonly name: SpecialKeyName;

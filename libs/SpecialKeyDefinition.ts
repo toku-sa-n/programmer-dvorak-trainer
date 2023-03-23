@@ -1,3 +1,5 @@
+import SpecialKeyName from "./SpecialKeyName";
+
 type SpecialKeyDefinition = {
     readonly type: "SpecialKey";
     readonly name: SpecialKeyName;
