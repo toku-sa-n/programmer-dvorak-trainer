@@ -5,14 +5,8 @@ import { useImmer } from "use-immer";
 
 import ExhaustiveError from "../libs/ExhausitiveError";
 import KeyDefinition from "../libs/KeyDefinition";
+import SingleRowKey from "./SingleRowKey";
 import styles from "./keyboard.module.css";
-
-type SingleRowKeyProps = {
-    readonly char: string;
-    readonly pressed: boolean;
-    readonly nextKey: string;
-    readonly isHomePosition: boolean;
-};
 
 type DoubleRowsKeyProps = {
     readonly upper: string;
@@ -202,29 +196,6 @@ export default function Keyboard({ next }: { next: string }) {
             <div className={styles["keyboard-base"]}>{keyComponents}</div>
         </div>
     );
-}
-
-function SingleRowKey({
-    char,
-    pressed,
-    nextKey,
-    isHomePosition,
-}: SingleRowKeyProps) {
-    const classes = [styles.key];
-
-    if (pressed) {
-        classes.push(styles.typed);
-    }
-
-    if (char.toUpperCase() === nextKey?.toUpperCase()) {
-        classes.push(styles.next);
-    }
-
-    if (isHomePosition) {
-        classes.push(styles["home-position"]);
-    }
-
-    return <div className={classes.join(" ")}>{char}</div>;
 }
 
 function DoubleRowsKey({ upper, lower, pressed, nextKey }: DoubleRowsKeyProps) {
