@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import ExhaustiveError from "@/ExhausitiveError";
 import { enableMapSet } from "immer";
+import next from "next";
 import { useImmer } from "use-immer";
 
 import styles from "./keyboard.module.css";
@@ -319,18 +320,7 @@ function SpecialKey({ name, pressed, nextKey }: SpecialKeyProps) {
             text = "Shift";
             css = styles.leftshift;
 
-            const isUpper =
-                keys.find(
-                    (x) => x.type === "DoubleRowsKey" && x.upper === nextKey
-                ) !== undefined;
-
-            if (
-                isUpper ||
-                (nextKey &&
-                    (isNumeric(nextKey) ||
-                        (isAlphabet(nextKey) &&
-                            nextKey === nextKey.toUpperCase())))
-            ) {
+            if (nextKey && shiftKeyIsNeeded(nextKey)) {
                 css += ` ${styles.next}`;
             }
             break;
@@ -343,18 +333,7 @@ function SpecialKey({ name, pressed, nextKey }: SpecialKeyProps) {
             text = "Shift";
             css = styles.rightshift;
 
-            const isUpper =
-                keys.find(
-                    (x) => x.type === "DoubleRowsKey" && x.upper === nextKey
-                ) !== undefined;
-
-            if (
-                isUpper ||
-                (nextKey &&
-                    (isNumeric(nextKey) ||
-                        (isAlphabet(nextKey) &&
-                            nextKey === nextKey.toUpperCase())))
-            ) {
+            if (nextKey && shiftKeyIsNeeded(nextKey)) {
                 css += ` ${styles.next}`;
             }
             break;
@@ -394,4 +373,18 @@ function isAlphabet(c: string): boolean {
     const code = c.charCodeAt(0);
 
     return (code > 64 && code < 91) || (code > 96 && code < 123);
+}
+
+function shiftKeyIsNeeded(c: string): boolean {
+    if (c.length !== 1) {
+        throw new Error(`Only a character should be passed but 'c' is ${c}.`);
+    }
+
+    const isUpperKey =
+        keys.find((x) => x.type === "DoubleRowsKey" && x.upper === c) !==
+        undefined;
+
+    const isUpperCase = isAlphabet(c) && c === c.toUpperCase();
+
+    return isUpperKey || isUpperCase;
 }
