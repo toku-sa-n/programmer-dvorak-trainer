@@ -331,7 +331,7 @@ function SpecialKey({ name, pressed, nextKey }: SpecialKeyProps) {
                         (isAlphabet(nextKey) &&
                             nextKey === nextKey.toUpperCase())))
             ) {
-                css += " " + styles.next;
+                css += ` ${styles.next}`;
             }
             break;
         }
@@ -355,7 +355,7 @@ function SpecialKey({ name, pressed, nextKey }: SpecialKeyProps) {
                         (isAlphabet(nextKey) &&
                             nextKey === nextKey.toUpperCase())))
             ) {
-                css += " " + styles.next;
+                css += ` ${styles.next}`;
             }
             break;
         case "space":
