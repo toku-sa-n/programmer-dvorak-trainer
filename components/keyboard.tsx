@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 import ExhaustiveError from "@/ExhausitiveError";
 import { enableMapSet } from "immer";
-import next from "next";
 import { useImmer } from "use-immer";
 
 import styles from "./keyboard.module.css";
