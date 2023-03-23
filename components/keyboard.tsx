@@ -6,23 +6,26 @@ import { useImmer } from "use-immer";
 
 import styles from "./keyboard.module.css";
 
-type Key = SingleRowKey | DoubleRowsKey | SpecialKey;
+type KeyDefinition =
+    | SingleRowKeyDefinition
+    | DoubleRowsKeyDefinition
+    | SpecialKeyDefinition;
 
-type SingleRowKey = {
+type SingleRowKeyDefinition = {
     readonly type: "SingleRowKey";
     readonly char: string;
     readonly code: string;
     readonly isHomePosition: boolean;
 };
 
-type SingleRowKeyProps = {
+type SingleRowKeyPropsDefinition = {
     readonly char: string;
     readonly pressed: boolean;
     readonly nextKey: string;
     readonly isHomePosition: boolean;
 };
 
-type DoubleRowsKey = {
+type DoubleRowsKeyDefinition = {
     readonly type: "DoubleRowsKey";
     readonly upper: string;
     readonly lower: string;
@@ -36,7 +39,7 @@ type DoubleRowsKeyProps = {
     readonly nextKey: string;
 };
 
-type SpecialKey = {
+type SpecialKeyDefinition = {
     readonly type: "SpecialKey";
     readonly name: SpecialKeyName;
     readonly code: string;
@@ -60,7 +63,7 @@ type SpecialKeyName =
     | "space"
     | "tab";
 
-const keys: ReadonlyArray<Key> = [
+const keys: ReadonlyArray<KeyDefinition> = [
     { type: "DoubleRowsKey", upper: "~", lower: "$", code: "Backquote" },
     { type: "DoubleRowsKey", upper: "%", lower: "&", code: "Digit1" },
     { type: "DoubleRowsKey", upper: "7", lower: "[", code: "Digit2" },
@@ -230,7 +233,7 @@ function SingleRowKey({
     pressed,
     nextKey,
     isHomePosition,
-}: SingleRowKeyProps) {
+}: SingleRowKeyPropsDefinition) {
     const classes = [styles.key];
 
     if (pressed) {
