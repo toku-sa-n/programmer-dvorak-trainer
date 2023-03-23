@@ -1,17 +1,18 @@
+import ExhaustiveError from "../libs/ExhausitiveError";
 import SpecialKeyName from "../libs/SpecialKeyName";
 import keys from "../libs/keys";
 import styles from "./keyboard.module.css";
 
 type SpecialKeyProps = {
     readonly name: SpecialKeyName;
+    readonly isNextKey: boolean;
     readonly pressed: boolean;
-    readonly nextKey: string;
 };
 
 export default function SpecialKey({
     name,
+    isNextKey,
     pressed,
-    nextKey,
 }: SpecialKeyProps) {
     let text;
     let css;
@@ -55,7 +56,7 @@ export default function SpecialKey({
             text = "Shift";
             css = styles.leftshift;
 
-            if (nextKey && shiftKeyIsNeeded(nextKey)) {
+            if (isNextKey) {
                 css += ` ${styles.next}`;
             }
             break;
@@ -68,7 +69,7 @@ export default function SpecialKey({
             text = "Shift";
             css = styles.rightshift;
 
-            if (nextKey && shiftKeyIsNeeded(nextKey)) {
+            if (isNextKey) {
                 css += ` ${styles.next}`;
             }
             break;
@@ -76,7 +77,7 @@ export default function SpecialKey({
             text = "Space";
             css = styles.space;
 
-            if (nextKey === " ") {
+            if (isNextKey) {
                 css += ` ${styles.next}`;
             }
             break;
@@ -96,24 +97,4 @@ export default function SpecialKey({
     }
 
     return <div className={classes.join(" ")}>{text}</div>;
-}
-
-function isAlphabet(c: string): boolean {
-    const code = c.charCodeAt(0);
-
-    return (code > 64 && code < 91) || (code > 96 && code < 123);
-}
-
-function shiftKeyIsNeeded(c: string): boolean {
-    if (c.length !== 1) {
-        throw new Error(`Only a character should be passed but 'c' is ${c}.`);
-    }
-
-    const isUpperKey =
-        keys.find((x) => x.type === "DoubleRowsKey" && x.upper === c) !==
-        undefined;
-
-    const isUpperCase = isAlphabet(c) && c === c.toUpperCase();
-
-    return isUpperKey || isUpperCase;
 }

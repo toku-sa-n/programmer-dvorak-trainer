@@ -77,7 +77,7 @@ export default function Keyboard({ next }: { next: string }) {
                         key={x.code}
                         name={x.name}
                         pressed={pressedKeys.has(x.code)}
-                        nextKey={next}
+                        isNextKey={next !== undefined && isNextKey(x, next)}
                     />
                 );
             default:
@@ -133,4 +133,10 @@ function isShiftKeyNeeded(c: string): boolean {
     const isUpperCase = isAlphabet(c) && c === c.toUpperCase();
 
     return isUpperKey || isUpperCase;
+}
+
+function isAlphabet(c: string): boolean {
+    const code = c.charCodeAt(0);
+
+    return (code > 64 && code < 91) || (code > 96 && code < 123);
 }
