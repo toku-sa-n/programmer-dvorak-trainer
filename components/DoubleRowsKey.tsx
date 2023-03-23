@@ -1,5 +1,3 @@
-import { isKeyObject } from "util/types";
-
 import styles from "./keyboard.module.css";
 
 type DoubleRowsKeyProps = {
