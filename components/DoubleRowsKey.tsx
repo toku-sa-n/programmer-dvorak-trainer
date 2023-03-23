@@ -1,3 +1,5 @@
+import { isKeyObject } from "util/types";
+
 import styles from "./keyboard.module.css";
 
 type DoubleRowsKeyProps = {
@@ -19,12 +21,7 @@ export default function DoubleRowsKey({
         classes.push(styles.typed);
     }
 
-    if (
-        nextKey &&
-        [upper.toUpperCase(), lower.toUpperCase()].includes(
-            nextKey.toUpperCase()
-        )
-    ) {
+    if (nextKey && isNextKey(nextKey, upper, lower)) {
         classes.push(styles.next);
     }
 
@@ -34,5 +31,11 @@ export default function DoubleRowsKey({
             <br />
             {lower}
         </div>
+    );
+}
+
+function isNextKey(key: string, upper: string, lower: string): boolean {
+    return [upper.toUpperCase(), lower.toUpperCase()].includes(
+        key.toUpperCase()
     );
 }
