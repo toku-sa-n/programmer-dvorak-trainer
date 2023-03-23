@@ -67,8 +67,8 @@ export default function Keyboard({ next }: { next: string }) {
                         key={x.code}
                         upper={x.upper}
                         lower={x.lower}
+                        isNextKey={next !== undefined && isNextKey(x, next)}
                         pressed={pressedKeys.has(x.code)}
-                        nextKey={next}
                     />
                 );
             case "SpecialKey":

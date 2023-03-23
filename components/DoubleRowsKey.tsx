@@ -3,15 +3,15 @@ import styles from "./keyboard.module.css";
 type DoubleRowsKeyProps = {
     readonly upper: string;
     readonly lower: string;
-    readonly nextKey: string;
+    readonly isNextKey: boolean;
     readonly pressed: boolean;
 };
 
 export default function DoubleRowsKey({
     upper,
     lower,
+    isNextKey,
     pressed,
-    nextKey,
 }: DoubleRowsKeyProps) {
     const classes = [styles.key, styles["double-rows"]];
 
@@ -19,7 +19,7 @@ export default function DoubleRowsKey({
         classes.push(styles.typed);
     }
 
-    if (nextKey && isNextKey(nextKey, upper, lower)) {
+    if (isNextKey) {
         classes.push(styles.next);
     }
 
@@ -29,11 +29,5 @@ export default function DoubleRowsKey({
             <br />
             {lower}
         </div>
-    );
-}
-
-function isNextKey(key: string, upper: string, lower: string): boolean {
-    return [upper.toUpperCase(), lower.toUpperCase()].includes(
-        key.toUpperCase()
     );
 }
