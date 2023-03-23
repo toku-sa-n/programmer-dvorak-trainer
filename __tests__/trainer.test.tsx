@@ -25,8 +25,14 @@ describe("On typing the correct key", () => {
     test("Shifts the text to type by a character", () => {
         render(<Trainer />);
 
+        // The first "i" is intentionally omitted. This is because the "i" is
+        // enclosed in `<span>`, and therefore `getByText` will fail if it is
+        // included.
+        // https://stackoverflow.com/questions/55509875/how-to-query-by-text-string-which-contains-html-tags-using-react-testing-library
+        // describes how to deal with such cases. However, I decided to simply
+        // omit the first "i" because, to be honest, it's a bit of a pain.
         const text = screen.getByText(
-            'int main(void){printf("hello world");return 0;}'
+            'nt main(void){printf("hello world");return 0;}'
         );
 
         userEvent.keyboard("i");
@@ -52,8 +58,9 @@ describe("On typing the correct key", () => {
     test("Typing the last character shows the next sentence", () => {
         render(<Trainer />);
 
+        // See the above comment for the omitted "i".
         const text = screen.getByText(
-            'int main(void){printf("hello world");return 0;}'
+            'nt main(void){printf("hello world");return 0;}'
         );
 
         userEvent.keyboard('int main(void){{printf("hello world");return 0;}}');
@@ -68,8 +75,9 @@ describe("On typing the wrong key", () => {
     test("It does not shift the text", () => {
         render(<Trainer />);
 
+        // See the above comment for the omitted "i".
         const text = screen.getByText(
-            'int main(void){printf("hello world");return 0;}'
+            'nt main(void){printf("hello world");return 0;}'
         );
 
         userEvent.keyboard("a");
