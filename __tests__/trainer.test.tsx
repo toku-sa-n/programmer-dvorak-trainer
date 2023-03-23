@@ -22,52 +22,58 @@ test("The next key is highlighted", () => {
 });
 
 describe("On typing the correct key", () => {
-    test("Shifts the text to type by a character", () => {
-        render(<Trainer />);
+    describe("The next key is a lowercase alphabet", () => {
+        test("Shifts the text to type by a character", () => {
+            render(<Trainer />);
 
-        // The first "i" is intentionally omitted. This is because the "i" is
-        // enclosed in `<span>`, and therefore `getByText` will fail if it is
-        // included.
-        // https://stackoverflow.com/questions/55509875/how-to-query-by-text-string-which-contains-html-tags-using-react-testing-library
-        // describes how to deal with such cases. However, I decided to simply
-        // omit the first "i" because, to be honest, it's a bit of a pain.
-        const text = screen.getByText(
-            'nt main(void){printf("hello world");return 0;}'
-        );
+            // The first "i" is intentionally omitted. This is because the "i" is
+            // enclosed in `<span>`, and therefore `getByText` will fail if it is
+            // included.
+            // https://stackoverflow.com/questions/55509875/how-to-query-by-text-string-which-contains-html-tags-using-react-testing-library
+            // describes how to deal with such cases. However, I decided to simply
+            // omit the first "i" because, to be honest, it's a bit of a pain.
+            const text = screen.getByText(
+                'nt main(void){printf("hello world");return 0;}'
+            );
 
-        userEvent.keyboard("i");
+            userEvent.keyboard("i");
 
-        expect(text.textContent).toBe(
-            escapeSpace('nt main(void){printf("hello world");return 0;}')
-        );
+            expect(text.textContent).toBe(
+                escapeSpace('nt main(void){printf("hello world");return 0;}')
+            );
+        });
+
+        test("The next key is highlighted.", () => {
+            render(<Trainer />);
+
+            userEvent.keyboard("i");
+
+            const key = screen.getByText("N");
+
+            expect(key.parentElement?.classList).toContain("next");
+        });
     });
 
-    test("The next key is highlighted.", () => {
-        render(<Trainer />);
+    describe("Typing the last character", () => {
+        // The same statement is returned as the next one as `Math.random` is
+        // mocked to return a fixed value, although in reality the next statement
+        // is selected at random.
+        test("The next sentence is showed", () => {
+            render(<Trainer />);
 
-        userEvent.keyboard("i");
+            // See the above comment for the omitted "i".
+            const text = screen.getByText(
+                'nt main(void){printf("hello world");return 0;}'
+            );
 
-        const key = screen.getByText("N");
+            userEvent.keyboard(
+                'int main(void){{printf("hello world");return 0;}}'
+            );
 
-        expect(key.parentElement?.classList).toContain("next");
-    });
-
-    // The same statement is returned as the next one as `Math.random` is
-    // mocked to return a fixed value, although in reality the next statement
-    // is selected at random.
-    test("Typing the last character shows the next sentence", () => {
-        render(<Trainer />);
-
-        // See the above comment for the omitted "i".
-        const text = screen.getByText(
-            'nt main(void){printf("hello world");return 0;}'
-        );
-
-        userEvent.keyboard('int main(void){{printf("hello world");return 0;}}');
-
-        expect(text.textContent).toBe(
-            escapeSpace('int main(void){printf("hello world");return 0;}')
-        );
+            expect(text.textContent).toBe(
+                escapeSpace('int main(void){printf("hello world");return 0;}')
+            );
+        });
     });
 });
 
