@@ -16,4 +16,4 @@ This project uses the `ExhaustiveError` class from [サバイバル TypeScript](
 
 This project uses [Source Code Pro font](https://fonts.google.com/specimen/Source+Code+Pro) via Google Fonts, and its license file is [licenses/source-code-pro.md](licenses/source-code-pro.md).
 
-The licenses for all the other codes and the whole project itself is AGPL 3.0 or later at your option.
+The licenses for all the other codes and the whole project itself is AGPL 3.0 or later at your option. The license file is [licenses/AGPL](licenses/AGPL).
