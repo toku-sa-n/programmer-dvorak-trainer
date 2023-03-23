@@ -77,6 +77,23 @@ describe("On typing the correct key", () => {
     });
 });
 
+test("Shift keys are highlighted if the next key is a number", () => {
+    render(<Trainer />);
+
+    userEvent.keyboard('int main(void){{printf("hello world");return ');
+
+    // For some reasons, `"*"` instead of `/\*/` does not work.
+    const nextKey = screen.getByText(/\*/);
+
+    expect(nextKey.parentElement?.classList).toContain("next");
+
+    const shiftKeys = screen.getAllByText("Shift");
+
+    shiftKeys.forEach((key) => {
+        expect(key.parentElement?.classList).toContain("next");
+    });
+});
+
 describe("On typing the wrong key", () => {
     test("It does not shift the text", () => {
         render(<Trainer />);
