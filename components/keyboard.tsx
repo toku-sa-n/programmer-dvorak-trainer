@@ -7,7 +7,7 @@ import ExhaustiveError from "../libs/ExhausitiveError";
 import KeyDefinition from "../libs/KeyDefinition";
 import styles from "./keyboard.module.css";
 
-type SingleRowKeyPropsDefinition = {
+type SingleRowKeyProps = {
     readonly char: string;
     readonly pressed: boolean;
     readonly nextKey: string;
@@ -209,7 +209,7 @@ function SingleRowKey({
     pressed,
     nextKey,
     isHomePosition,
-}: SingleRowKeyPropsDefinition) {
+}: SingleRowKeyProps) {
     const classes = [styles.key];
 
     if (pressed) {
