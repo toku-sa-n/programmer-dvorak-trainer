@@ -161,15 +161,15 @@ export default function Keyboard({ next }: { next: string }) {
         const onKeyDown = (e: KeyboardEvent) => {
             e.preventDefault();
 
-            setPressedKeys((keys) => keys.add(e.code));
+            setPressedKeys((presed) => presed.add(e.code));
         };
 
         const onKeyUp = (e: KeyboardEvent) => {
             e.preventDefault();
 
-            setPressedKeys((keys) => {
-                keys.delete(e.code);
-                return keys;
+            setPressedKeys((pressed) => {
+                pressed.delete(e.code);
+                return pressed;
             });
         };
 
