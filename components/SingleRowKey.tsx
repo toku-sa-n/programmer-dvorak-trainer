@@ -19,7 +19,7 @@ export default function SingleRowKey({
         classes.push(styles.typed);
     }
 
-    if (char.toUpperCase() === nextKey?.toUpperCase()) {
+    if (nextKey && isNextKey(char, nextKey)) {
         classes.push(styles.next);
     }
 
@@ -28,4 +28,8 @@ export default function SingleRowKey({
     }
 
     return <div className={classes.join(" ")}>{char}</div>;
+}
+
+function isNextKey(key: string, nextKey: string): boolean {
+    return key.toUpperCase() === nextKey.toUpperCase();
 }
