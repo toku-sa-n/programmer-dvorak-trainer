@@ -3,8 +3,8 @@ import styles from "./keyboard.module.css";
 type DoubleRowsKeyProps = {
     readonly upper: string;
     readonly lower: string;
-    readonly pressed: boolean;
     readonly nextKey: string;
+    readonly pressed: boolean;
 };
 
 export default function DoubleRowsKey({
