@@ -27,5 +27,9 @@ export default function SingleRowKey({
         classes.push(styles["home-position"]);
     }
 
-    return <div className={classes.join(" ")}>{char}</div>;
+    return (
+        <div className={classes.join(" ")}>
+            <div className={styles["key-label"]}>{char}</div>
+        </div>
+    );
 }

@@ -13,7 +13,7 @@ export default function DoubleRowsKey({
     isNextKey,
     pressed,
 }: DoubleRowsKeyProps) {
-    const classes = [styles.key, styles["double-rows"]];
+    const classes = [styles.key];
 
     if (pressed) {
         classes.push(styles.typed);
@@ -25,9 +25,11 @@ export default function DoubleRowsKey({
 
     return (
         <div className={classes.join(" ")}>
-            {upper}
-            <br />
-            {lower}
+            <div className={styles["key-label"]}>
+                {upper}
+                <br />
+                {lower}
+            </div>
         </div>
     );
 }

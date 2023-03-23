@@ -1,6 +1,5 @@
 import ExhaustiveError from "../libs/ExhausitiveError";
 import SpecialKeyName from "../libs/SpecialKeyName";
-import keys from "../libs/keys";
 import styles from "./keyboard.module.css";
 
 type SpecialKeyProps = {
@@ -31,8 +30,10 @@ export default function SpecialKey({
 
             return (
                 <div className={classes.join(" ")}>
-                    |
-                    <br />\
+                    <div className={styles["key-label"]}>
+                        |
+                        <br />\
+                    </div>
                 </div>
             );
         }
@@ -96,5 +97,9 @@ export default function SpecialKey({
         classes.push(styles.typed);
     }
 
-    return <div className={classes.join(" ")}>{text}</div>;
+    return (
+        <div className={classes.join(" ")}>
+            <div className={styles["key-label"]}>{text}</div>
+        </div>
+    );
 }
