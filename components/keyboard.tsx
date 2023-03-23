@@ -4,19 +4,8 @@ import { enableMapSet } from "immer";
 import { useImmer } from "use-immer";
 
 import ExhaustiveError from "../libs/ExhausitiveError";
+import KeyDefinition from "../libs/KeyDefinition";
 import styles from "./keyboard.module.css";
-
-type KeyDefinition =
-    | SingleRowKeyDefinition
-    | DoubleRowsKeyDefinition
-    | SpecialKeyDefinition;
-
-type SingleRowKeyDefinition = {
-    readonly type: "SingleRowKey";
-    readonly char: string;
-    readonly code: string | null;
-    readonly isHomePosition: boolean;
-};
 
 type SingleRowKeyPropsDefinition = {
     readonly char: string;
@@ -25,24 +14,11 @@ type SingleRowKeyPropsDefinition = {
     readonly isHomePosition: boolean;
 };
 
-type DoubleRowsKeyDefinition = {
-    readonly type: "DoubleRowsKey";
-    readonly upper: string;
-    readonly lower: string;
-    readonly code: string;
-};
-
 type DoubleRowsKeyProps = {
     readonly upper: string;
     readonly lower: string;
     readonly pressed: boolean;
     readonly nextKey: string;
-};
-
-type SpecialKeyDefinition = {
-    readonly type: "SpecialKey";
-    readonly name: SpecialKeyName;
-    readonly code: string;
 };
 
 type SpecialKeyProps = {
