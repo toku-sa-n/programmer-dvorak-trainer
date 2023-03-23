@@ -18,7 +18,7 @@ test("The next key is highlighted", () => {
 
     const key = screen.getByText("I");
 
-    expect(key.classList).toContain("next");
+    expect(key.parentElement?.classList).toContain("next");
 });
 
 describe("On typing the correct key", () => {
@@ -49,7 +49,7 @@ describe("On typing the correct key", () => {
 
         const key = screen.getByText("N");
 
-        expect(key.classList).toContain("next");
+        expect(key.parentElement?.classList).toContain("next");
     });
 
     // The same statement is returned as the next one as `Math.random` is
@@ -94,6 +94,6 @@ describe("On typing the wrong key", () => {
 
         const key = screen.getByText("I");
 
-        expect(key.classList).toContain("next");
+        expect(key.parentElement?.classList).toContain("next");
     });
 });
