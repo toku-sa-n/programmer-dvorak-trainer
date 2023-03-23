@@ -9,7 +9,7 @@ import userEvent from "@testing-library/user-event";
 import { mockRandom } from "jest-mock-random";
 
 import Trainer from "../components/trainer";
-import escapeSpace from "../src/escapeSpace";
+import escapeSpace from "../libs/escapeSpace";
 
 mockRandom(0.1);
 

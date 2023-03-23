@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-import ExhaustiveError from "@/ExhausitiveError";
 import { enableMapSet } from "immer";
 import { useImmer } from "use-immer";
 
+import ExhaustiveError from "../libs/ExhausitiveError";
 import styles from "./keyboard.module.css";
 
 type KeyDefinition =
