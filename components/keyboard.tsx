@@ -4,6 +4,8 @@ import { enableMapSet } from "immer";
 import { useImmer } from "use-immer";
 
 import ExhaustiveError from "../libs/ExhausitiveError";
+import KeyDefinition from "../libs/KeyDefinition";
+import SpecialKeyDefinition from "../libs/SpecialKeyDefinition";
 import keys from "../libs/keys";
 import DoubleRowsKey from "./DoubleRowsKey";
 import SingleRowKey from "./SingleRowKey";
@@ -50,7 +52,11 @@ export default function Keyboard({ next }: { next: string }) {
                     <SingleRowKey
                         key={x.code}
                         pressed={pressedKeys.has(x.code)}
-                        nextKey={next}
+                        // `next` can be `undefined`. When the program starts
+                        // and before the first `useEffect` is executed, `next
+                        // === undefined` because the problem statement is
+                        // empty.
+                        isNextKey={next !== undefined && isNextKey(x, next)}
                         char={x.char}
                         isHomePosition={x.isHomePosition}
                     />
@@ -84,4 +90,47 @@ export default function Keyboard({ next }: { next: string }) {
             <div className={styles["keyboard-base"]}>{keyComponents}</div>
         </div>
     );
+}
+
+function isNextKey(key: KeyDefinition, nextKey: string): boolean {
+    switch (key.type) {
+        case "SingleRowKey":
+            return key.char.toUpperCase() === nextKey.toUpperCase();
+        case "DoubleRowsKey":
+            return [key.upper.toUpperCase(), key.lower.toUpperCase()].includes(
+                nextKey
+            );
+        case "SpecialKey":
+            return isNextSpecialKey(key, nextKey);
+        default:
+            throw new ExhaustiveError(key);
+    }
+}
+
+function isNextSpecialKey(key: SpecialKeyDefinition, nextKey: string): boolean {
+    switch (key.name) {
+        case "backslash":
+            return nextKey === "\\";
+        case "space":
+            return nextKey === " ";
+        case "leftshift":
+        case "rightshift":
+            return isShiftKeyNeeded(nextKey);
+        default:
+            return false;
+    }
+}
+
+function isShiftKeyNeeded(c: string): boolean {
+    if (c.length !== 1) {
+        throw new Error(`Only a character should be passed but 'c' is ${c}.`);
+    }
+
+    const isUpperKey =
+        keys.find((x) => x.type === "DoubleRowsKey" && x.upper === c) !==
+        undefined;
+
+    const isUpperCase = isAlphabet(c) && c === c.toUpperCase();
+
+    return isUpperKey || isUpperCase;
 }
