@@ -15,7 +15,7 @@ type KeyDefinition =
 type SingleRowKeyDefinition = {
     readonly type: "SingleRowKey";
     readonly char: string;
-    readonly code: string;
+    readonly code: string | null;
     readonly isHomePosition: boolean;
 };
 
@@ -148,9 +148,9 @@ const keys: ReadonlyArray<KeyDefinition> = [
     {
         type: "SingleRowKey",
         char: "Fn",
-        code: "asdpogasdpguh",
+        code: null,
         isHomePosition: false,
-    }, // TODO: No code is assigned to the "Fn" key. Is just a empty string ok?
+    },
 ] as const;
 
 // The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
