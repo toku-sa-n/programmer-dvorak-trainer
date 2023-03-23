@@ -363,7 +363,7 @@ function SpecialKey({ name, pressed, nextKey }: SpecialKeyProps) {
             css = styles.space;
 
             if (nextKey === " ") {
-                css += " " + styles.next;
+                css += ` ${styles.next}`;
             }
             break;
         case "tab":
