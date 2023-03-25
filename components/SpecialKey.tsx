@@ -3,99 +3,97 @@ import SpecialKeyName from "../libs/SpecialKeyName";
 import styles from "./keyboard.module.css";
 
 type SpecialKeyProps = {
+    // A workaround for false-positive.
+    // eslint-disable-next-line react/no-unused-prop-types
     readonly name: SpecialKeyName;
+    // eslint-disable-next-line react/no-unused-prop-types
     readonly isNextKey: boolean;
+    // eslint-disable-next-line react/no-unused-prop-types
     readonly pressed: boolean;
 };
 
-export default function SpecialKey({
-    name,
-    isNextKey,
-    pressed,
-}: SpecialKeyProps) {
-    let text;
-    let css;
-
-    switch (name) {
-        case "backslash": {
-            const classes = [styles.key, styles.backslash];
-
-            if (pressed) {
-                classes.push(styles.typed);
-            }
-
-            return (
-                <div className={classes.join(" ")}>
-                    <div className={styles["key-label"]}>
-                        |
-                        <br />\
-                    </div>
-                </div>
-            );
-        }
-        case "capslock":
-            text = "CapsLock";
-            css = styles.capslock;
-            break;
-        case "command":
-            text = "Command";
-            css = styles.command;
-            break;
-        case "delete":
-            text = "Delete";
-            css = styles.delete;
-            break;
-        case "leftctrl":
-            text = "Ctrl";
-            css = styles.leftctrl;
-            break;
-        case "leftshift": {
-            text = "Shift";
-            css = styles.leftshift;
-
-            if (isNextKey) {
-                css += ` ${styles.next}`;
-            }
-            break;
-        }
-        case "return":
-            text = "Return";
-            css = styles.return;
-            break;
-        case "rightshift":
-            text = "Shift";
-            css = styles.rightshift;
-
-            if (isNextKey) {
-                css += ` ${styles.next}`;
-            }
-            break;
-        case "space":
-            text = "Space";
-            css = styles.space;
-
-            if (isNextKey) {
-                css += ` ${styles.next}`;
-            }
-            break;
-        case "tab":
-            text = "Tab";
-            css = styles.tab;
-            break;
-        default:
-            throw new ExhaustiveError(name);
-            break;
-    }
-
-    const classes = [styles.key, css];
-
-    if (pressed) {
-        classes.push(styles.typed);
-    }
-
+export default function SpecialKey(props: SpecialKeyProps) {
     return (
-        <div className={classes.join(" ")}>
-            <div className={styles["key-label"]}>{text}</div>
+        <div className={classes(props).join(" ")}>
+            <div className={styles["key-label"]}>{label(props)}</div>
         </div>
     );
+}
+
+function classes(props: SpecialKeyProps): string[] {
+    const { pressed, isNextKey } = props;
+
+    const l = [styles.key, additionalStyles(props)];
+
+    if (pressed) {
+        l.push(styles.typed);
+    }
+
+    if (isNextKey) {
+        l.push(styles.next);
+    }
+
+    return l;
+}
+
+function label({ name }: SpecialKeyProps) {
+    switch (name) {
+        case "backslash":
+            return (
+                <>
+                    |
+                    <br />\
+                </>
+            );
+        case "capslock":
+            return "CapsLock";
+        case "command":
+            return "Command";
+        case "delete":
+            return "Delete";
+        case "leftctrl":
+            return "Ctrl";
+        case "leftshift":
+        case "rightshift":
+            return "Shift";
+        case "return":
+            return "Return";
+        case "space":
+            return "Space";
+        case "tab":
+            return "Tab";
+        default:
+            throw new ExhaustiveError(name);
+    }
+}
+
+function additionalStyles({ name }: SpecialKeyProps) {
+    switch (name) {
+        case "backslash": {
+            return styles.backslash;
+        }
+        case "capslock":
+            return styles.capslock;
+        case "command":
+            return styles.command;
+        case "delete":
+            return styles.delete;
+        case "leftctrl":
+            return styles.leftctrl;
+            break;
+        case "leftshift": {
+            return styles.leftshift;
+        }
+        case "return":
+            return styles.return;
+        case "rightshift":
+            return styles.rightshift;
+
+        case "space":
+            return styles.space;
+        case "tab":
+            return styles.tab;
+        default:
+            throw new ExhaustiveError(name);
+    }
 }
