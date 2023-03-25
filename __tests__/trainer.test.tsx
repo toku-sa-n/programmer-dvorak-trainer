@@ -22,22 +22,9 @@ test("The next key is highlighted", () => {
 describe("On typing the correct key", () => {
     describe("The next key is a lowercase alphabet", () => {
         test("Shifts the text to type by a character", () => {
-            render(<Trainer />);
-
-            // The first "i" is intentionally omitted. This is because the "i" is
-            // enclosed in `<span>`, and therefore `getByText` will fail if it is
-            // included.
-            // https://stackoverflow.com/questions/55509875/how-to-query-by-text-string-which-contains-html-tags-using-react-testing-library
-            // describes how to deal with such cases. However, I decided to simply
-            // omit the first "i" because, to be honest, it's a bit of a pain.
-            const text = screen.getByText(
+            expectDisplayAfterTyping(
+                "i",
                 'nt main(void){printf("hello world");return 0;}'
-            );
-
-            userEvent.keyboard("i");
-
-            expect(text.textContent).toBe(
-                escapeSpace('nt main(void){printf("hello world");return 0;}')
             );
         });
 
@@ -52,22 +39,12 @@ describe("On typing the correct key", () => {
 
     describe("Typing the last character", () => {
         // The same statement is returned as the next one as `Math.random` is
-        // mocked to return a fixed value, although in reality the next statement
-        // is selected at random.
+        // mocked to return a fixed value, although in reality the next
+        // statement is selected at random.
         test("The next sentence is showed", () => {
-            render(<Trainer />);
-
-            // See the above comment for the omitted "i".
-            const text = screen.getByText(
-                'nt main(void){printf("hello world");return 0;}'
-            );
-
-            userEvent.keyboard(
-                'int main(void){{printf("hello world");return 0;}}'
-            );
-
-            expect(text.textContent).toBe(
-                escapeSpace('int main(void){printf("hello world");return 0;}')
+            expectDisplayAfterTyping(
+                'int main(void){printf("hello world");return 0;}',
+                'int main(void){printf("hello world");return 0;}'
             );
         });
     });
@@ -92,17 +69,9 @@ test("Shift keys are highlighted if the next key is a number", () => {
 
 describe("On typing the wrong key", () => {
     test("It does not shift the text", () => {
-        render(<Trainer />);
-
-        // See the above comment for the omitted "i".
-        const text = screen.getByText(
-            'nt main(void){printf("hello world");return 0;}'
-        );
-
-        userEvent.keyboard("a");
-
-        expect(text.textContent).toBe(
-            escapeSpace('int main(void){printf("hello world");return 0;}')
+        expectDisplayAfterTyping(
+            "a",
+            'int main(void){printf("hello world");return 0;}'
         );
     });
 
@@ -119,4 +88,27 @@ function expectKeyIsHighlighted(text: string): void {
     const key = screen.getByText(text);
 
     expect(key.parentElement?.classList).toContain("next");
+}
+
+function expectDisplayAfterTyping(textToType: string, expected: string): void {
+    render(<Trainer />);
+
+    // The first "i" is intentionally omitted. This is because the "i" is
+    // enclosed in `<span>`, and therefore `getByText` will fail if it is
+    // included.
+    // https://stackoverflow.com/questions/55509875/how-to-query-by-text-string-which-contains-html-tags-using-react-testing-library
+    // describes how to deal with such cases. However, I decided to simply omit
+    // the first "i" because, to be honest, it's a bit of a pain.
+    const text = screen.getByText(
+        'nt main(void){printf("hello world");return 0;}'
+    );
+
+    // See https://testing-library.com/docs/user-event/keyboard/ for why we need this.
+    const escapedTextToType = textToType
+        .replace(/\{/, "{{")
+        .replace(/\[/, "[[");
+
+    userEvent.keyboard(escapedTextToType);
+
+    expect(text.textContent).toBe(escapeSpace(expected));
 }
