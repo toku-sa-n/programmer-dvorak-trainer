@@ -16,9 +16,7 @@ mockRandom(0.1);
 test("The next key is highlighted", () => {
     render(<Trainer />);
 
-    const key = screen.getByText("I");
-
-    expect(key.parentElement?.classList).toContain("next");
+    expectKeyIsHighlighted("I");
 });
 
 describe("On typing the correct key", () => {
@@ -48,9 +46,7 @@ describe("On typing the correct key", () => {
 
             userEvent.keyboard("i");
 
-            const key = screen.getByText("N");
-
-            expect(key.parentElement?.classList).toContain("next");
+            expectKeyIsHighlighted("N");
         });
     });
 
@@ -115,8 +111,12 @@ describe("On typing the wrong key", () => {
 
         userEvent.keyboard("a");
 
-        const key = screen.getByText("I");
-
-        expect(key.parentElement?.classList).toContain("next");
+        expectKeyIsHighlighted("I");
     });
 });
+
+function expectKeyIsHighlighted(text: string): void {
+    const key = screen.getByText(text);
+
+    expect(key.parentElement?.classList).toContain("next");
+}
