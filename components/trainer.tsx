@@ -1,21 +1,8 @@
 import { useEffect, useState } from "react";
 
+import typingTexts from "../libs/typingTexts";
 import Display from "./display";
 import Keyboard from "./keyboard";
-
-const original = [
-    'int main(void){printf("hello world");return 0;}',
-    "e=2.7182818284",
-    "pi=3.1415926535",
-    "int power(int base,int exp){int result;for(result=1;exp>0;exp--){result*=base;}return result;}",
-    "function choice(){return original[Math.floor(Math.random()*original.length)];}",
-    "main::IO()",
-    "man ls",
-];
-
-function choice() {
-    return original[Math.floor(Math.random() * original.length)];
-}
 
 export default function Trainer() {
     const [text, setText] = useState("");
@@ -52,4 +39,8 @@ export default function Trainer() {
             <Keyboard next={text[0]} />
         </>
     );
+}
+
+function choice() {
+    return typingTexts[Math.floor(Math.random() * typingTexts.length)];
 }
