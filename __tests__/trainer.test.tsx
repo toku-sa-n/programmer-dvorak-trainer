@@ -11,10 +11,10 @@ import { mockRandom } from "jest-mock-random";
 import Trainer from "../components/trainer";
 import escapeSpace from "../libs/escapeSpace";
 
-mockRandom(0.1);
+mockRandom(0.2);
 
 test("The next key is highlighted", () => {
-    render(<Trainer />);
+    renderTrainer();
 
     expectKeyIsHighlighted("I");
 });
@@ -29,7 +29,7 @@ describe("On typing the correct key", () => {
         });
 
         test("The next key is highlighted.", () => {
-            render(<Trainer />);
+            renderTrainer();
 
             userEvent.keyboard("i");
 
@@ -51,7 +51,7 @@ describe("On typing the correct key", () => {
 });
 
 test("Shift keys are highlighted if the next key is a number", () => {
-    render(<Trainer />);
+    renderTrainer();
 
     userEvent.keyboard('int main(void){{printf("hello world");return ');
 
@@ -76,7 +76,7 @@ describe("On typing the wrong key", () => {
     });
 
     test("The next key is highlighted.", () => {
-        render(<Trainer />);
+        renderTrainer();
 
         userEvent.keyboard("a");
 
@@ -91,7 +91,7 @@ function expectKeyIsHighlighted(text: string): void {
 }
 
 function expectDisplayAfterTyping(textToType: string, expected: string): void {
-    render(<Trainer />);
+    renderTrainer();
 
     // The first "i" is intentionally omitted. This is because the "i" is
     // enclosed in `<span>`, and therefore `getByText` will fail if it is
@@ -111,4 +111,13 @@ function expectDisplayAfterTyping(textToType: string, expected: string): void {
     userEvent.keyboard(escapedTextToType);
 
     expect(text.textContent).toBe(escapeSpace(expected));
+}
+
+function renderTrainer() {
+    const typingTexts = [
+        'int main(void){printf("hello world");return 0;}',
+        "foo bar",
+    ];
+
+    render(<Trainer typingTexts={typingTexts} />);
 }

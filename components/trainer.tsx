@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 
-import typingTexts from "../libs/typingTexts";
 import Display from "./display";
 import Keyboard from "./keyboard";
 
-export default function Trainer() {
+type TrainerProps = {
+    typingTexts: string[];
+};
+
+export default function Trainer({ typingTexts }: TrainerProps) {
     const [text, setText] = useState("");
 
     useEffect(() => {
@@ -15,7 +18,7 @@ export default function Trainer() {
 
             setText((text) => {
                 if (text.length === 1) {
-                    return choice();
+                    return choice(typingTexts);
                 }
 
                 return text.slice(1);
@@ -25,13 +28,13 @@ export default function Trainer() {
         document.addEventListener("keydown", onKeyDown);
 
         return () => document.removeEventListener("keydown", onKeyDown);
-    }, [text]);
+    }, [text, typingTexts]);
 
     // `useEffect` is used to avoid a warning.
     // See https://stackoverflow.com/questions/47539922/next-js-react-warning-when-generating-random-values-in-a-component.
     useEffect(() => {
-        setText(choice());
-    }, []);
+        setText(choice(typingTexts));
+    }, [typingTexts]);
 
     return (
         <>
@@ -41,6 +44,6 @@ export default function Trainer() {
     );
 }
 
-function choice() {
-    return typingTexts[Math.floor(Math.random() * typingTexts.length)];
+function choice<T>(l: T[]): T {
+    return l[Math.floor(Math.random() * l.length)];
 }
