@@ -13,6 +13,7 @@ export default function Home() {
                     name="description"
                     content="Practice typing in the Programming Dvorak layout."
                 />
+
                 <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1"
@@ -34,6 +35,7 @@ export default function Home() {
                     sizes="16x16"
                     href="/images/favicons/favicon-16x16.png"
                 />
+
                 <link rel="manifest" href="/images/favicons/site.webmanifest" />
             </Head>
             <main>
