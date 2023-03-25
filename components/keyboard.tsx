@@ -13,12 +13,14 @@ import SpecialKey from "./SpecialKey";
 import styles from "./keyboard.module.css";
 
 export default function Keyboard({ next }: { next: string }) {
-    // TODO: Is it okay to call this here?
+    // It does not seem that Next.js has a way to run codes on the server
+    // startup. See https://github.com/vercel/next.js/discussions/15341.
+    //
+    // For now, we call this function here.
     enableMapSet();
 
     const [pressedKeys, setPressedKeys] = useImmer(new Set());
 
-    // TODO: Is it really needed to use `useEffect`?
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {
             e.preventDefault();
