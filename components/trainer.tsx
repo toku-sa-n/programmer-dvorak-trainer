@@ -7,6 +7,8 @@ type TrainerProps = {
     typingTexts: string[];
 };
 
+// Different lists can be passed during normal execution and testing, which
+// makes testing easier.
 export default function Trainer({ typingTexts }: TrainerProps) {
     const [text, setText] = useState("");
 
