@@ -11,7 +11,7 @@ import Trainer from "../components/trainer";
 import escapeSpace from "../libs/escapeSpace";
 
 test("The next key is highlighted", () => {
-    renderTrainer();
+    render(<Trainer typingTexts={["ab1"]} />);
 
     expectKeyIsHighlighted("A");
 });
@@ -23,7 +23,7 @@ describe("On typing the correct key", () => {
         });
 
         test("The next key is highlighted.", () => {
-            renderTrainer();
+            render(<Trainer typingTexts={["ab1"]} />);
 
             userEvent.keyboard("a");
 
@@ -47,7 +47,7 @@ describe("On typing the correct key", () => {
 });
 
 test("Shift keys are highlighted if the next key is a number", () => {
-    renderTrainer();
+    render(<Trainer typingTexts={["ab1"]} />);
 
     userEvent.keyboard("ab");
 
@@ -69,7 +69,7 @@ describe("On typing the wrong key", () => {
     });
 
     test("The next key is highlighted.", () => {
-        renderTrainer();
+        render(<Trainer typingTexts={["ab1"]} />);
 
         userEvent.keyboard("b");
 
@@ -84,7 +84,7 @@ function expectKeyIsHighlighted(text: string): void {
 }
 
 function expectDisplayAfterTyping(textToType: string, expected: string): void {
-    renderTrainer();
+    render(<Trainer typingTexts={["ab1"]} />);
 
     // The first "i" is intentionally omitted. This is because the "i" is
     // enclosed in `<span>`, and therefore `getByText` will fail if it is
@@ -102,10 +102,4 @@ function expectDisplayAfterTyping(textToType: string, expected: string): void {
     userEvent.keyboard(escapedTextToType);
 
     expect(text.textContent).toBe(escapeSpace(expected));
-}
-
-function renderTrainer() {
-    const typingTexts = ["ab1"];
-
-    render(<Trainer typingTexts={typingTexts} />);
 }
