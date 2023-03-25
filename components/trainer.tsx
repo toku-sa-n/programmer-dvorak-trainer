@@ -19,7 +19,7 @@ export default function Trainer({ typingTexts }: TrainerProps) {
             }
 
             setText((text) => {
-                if (text.length === 1) {
+                if (text.length <= 1) {
                     return choice(typingTexts);
                 }
 
