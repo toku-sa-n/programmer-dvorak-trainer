@@ -10,15 +10,15 @@ type TrainerProps = {
 // Different lists can be passed during normal execution and testing, which
 // makes testing easier.
 export default function Trainer({ typingTexts }: TrainerProps) {
-    const [text, setText] = useState("");
+    const [currentText, setCurrentText] = useState("");
 
     useEffect(() => {
         function onKeyDown(e: KeyboardEvent) {
-            if (e.key !== text[0]) {
+            if (e.key !== currentText[0]) {
                 return;
             }
 
-            setText((text) => {
+            setCurrentText((text) => {
                 if (text.length <= 1) {
                     return choice(typingTexts);
                 }
@@ -30,18 +30,18 @@ export default function Trainer({ typingTexts }: TrainerProps) {
         document.addEventListener("keydown", onKeyDown);
 
         return () => document.removeEventListener("keydown", onKeyDown);
-    }, [text, typingTexts]);
+    }, [currentText, typingTexts]);
 
     // `useEffect` is used to avoid a warning.
     // See https://stackoverflow.com/questions/47539922/next-js-react-warning-when-generating-random-values-in-a-component.
     useEffect(() => {
-        setText(choice(typingTexts));
+        setCurrentText(choice(typingTexts));
     }, [typingTexts]);
 
     return (
         <>
-            <Display text={text} />
-            <Keyboard next={text[0]} />
+            <Display text={currentText} />
+            <Keyboard next={currentText[0]} />
         </>
     );
 }
