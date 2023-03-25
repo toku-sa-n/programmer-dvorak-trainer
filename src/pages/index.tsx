@@ -2,6 +2,7 @@ import styles from "@/styles/Home.module.css";
 import Head from "next/head";
 
 import Trainer from "../../components/trainer";
+import typingTexts from "../../libs/typingTexts";
 
 export default function Home() {
     return (
@@ -37,7 +38,7 @@ export default function Home() {
             </Head>
             <main>
                 <div className={styles["inner-container"]}>
-                    <Trainer />
+                    <Trainer typingTexts={typingTexts} />
                 </div>
             </main>
         </>
