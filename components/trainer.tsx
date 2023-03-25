@@ -32,8 +32,8 @@ export default function Trainer({ typingTexts }: TrainerProps) {
         return () => document.removeEventListener("keydown", onKeyDown);
     }, [currentText, typingTexts]);
 
-    // `useEffect` is used to avoid a warning.
-    // See https://stackoverflow.com/questions/47539922/next-js-react-warning-when-generating-random-values-in-a-component.
+    // `useEffect` is used to avoid a warning. See
+    // https://stackoverflow.com/questions/47539922/next-js-react-warning-when-generating-random-values-in-a-component.
     useEffect(() => {
         setCurrentText(choice(typingTexts));
     }, [typingTexts]);
