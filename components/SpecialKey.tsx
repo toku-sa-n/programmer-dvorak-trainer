@@ -18,11 +18,7 @@ export default function SpecialKey({
 
     switch (name) {
         case "backslash": {
-            const classes = [
-                styles.key,
-                styles.backslash,
-                styles["double-rows"],
-            ];
+            const classes = [styles.key, styles.backslash];
 
             if (pressed) {
                 classes.push(styles.typed);
