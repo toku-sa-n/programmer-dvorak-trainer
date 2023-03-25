@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import Display from "./display";
 import Keyboard from "./keyboard";
-import styles from "./trainer.module.css";
 
 const original = [
     'int main(void){printf("hello world");return 0;}',
@@ -48,9 +47,9 @@ export default function Trainer() {
     }, []);
 
     return (
-        <div className={styles.container}>
+        <>
             <Display text={text} />
             <Keyboard next={text[0]} />
-        </div>
+        </>
     );
 }
