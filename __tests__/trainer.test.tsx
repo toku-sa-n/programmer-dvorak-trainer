@@ -6,46 +6,42 @@ import { expect } from "@jest/globals";
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockRandom } from "jest-mock-random";
 
 import Trainer from "../components/trainer";
 import escapeSpace from "../libs/escapeSpace";
 
-mockRandom(0.2);
-
 test("The next key is highlighted", () => {
     renderTrainer();
 
-    expectKeyIsHighlighted("I");
+    expectKeyIsHighlighted("A");
 });
 
 describe("On typing the correct key", () => {
     describe("The next key is a lowercase alphabet", () => {
         test("Shifts the text to type by a character", () => {
-            expectDisplayAfterTyping(
-                "i",
-                'nt main(void){printf("hello world");return 0;}'
-            );
+            expectDisplayAfterTyping("a", "b1");
         });
 
         test("The next key is highlighted.", () => {
             renderTrainer();
 
-            userEvent.keyboard("i");
+            userEvent.keyboard("a");
 
-            expectKeyIsHighlighted("N");
+            expectKeyIsHighlighted("B");
         });
     });
 
     describe("Typing the last character", () => {
-        // The same statement is returned as the next one as `Math.random` is
-        // mocked to return a fixed value, although in reality the next
-        // statement is selected at random.
+        // Since there is only one sentence that can be selected as the next
+        // one, the same sentence is returned. In reality, the next sentence is
+        // chosen randomly.
+        //
+        // It is difficult to add a test that ensures the next sentence is
+        // chosen randomly. Modifying the list of sentences for tests may cause
+        // the test to fail, and it is impractical not to make such
+        // modifications.
         test("The next sentence is showed", () => {
-            expectDisplayAfterTyping(
-                'int main(void){printf("hello world");return 0;}',
-                'int main(void){printf("hello world");return 0;}'
-            );
+            expectDisplayAfterTyping("ab1", "ab1");
         });
     });
 });
@@ -53,10 +49,10 @@ describe("On typing the correct key", () => {
 test("Shift keys are highlighted if the next key is a number", () => {
     renderTrainer();
 
-    userEvent.keyboard('int main(void){{printf("hello world");return ');
+    userEvent.keyboard("ab");
 
-    // For some reasons, `"*"` instead of `/\*/` does not work.
-    const nextKey = screen.getByText(/\*/);
+    // For some reasons, `"("` instead of `/\(/` does not work.
+    const nextKey = screen.getByText(/\(/);
 
     expect(nextKey.parentElement?.classList).toContain("next");
 
@@ -69,18 +65,15 @@ test("Shift keys are highlighted if the next key is a number", () => {
 
 describe("On typing the wrong key", () => {
     test("It does not shift the text", () => {
-        expectDisplayAfterTyping(
-            "a",
-            'int main(void){printf("hello world");return 0;}'
-        );
+        expectDisplayAfterTyping("b", "ab1");
     });
 
     test("The next key is highlighted.", () => {
         renderTrainer();
 
-        userEvent.keyboard("a");
+        userEvent.keyboard("b");
 
-        expectKeyIsHighlighted("I");
+        expectKeyIsHighlighted("A");
     });
 });
 
@@ -99,9 +92,7 @@ function expectDisplayAfterTyping(textToType: string, expected: string): void {
     // https://stackoverflow.com/questions/55509875/how-to-query-by-text-string-which-contains-html-tags-using-react-testing-library
     // describes how to deal with such cases. However, I decided to simply omit
     // the first "i" because, to be honest, it's a bit of a pain.
-    const text = screen.getByText(
-        'nt main(void){printf("hello world");return 0;}'
-    );
+    const text = screen.getByText("b1");
 
     // See https://testing-library.com/docs/user-event/keyboard/ for why we need this.
     const escapedTextToType = textToType
@@ -114,10 +105,7 @@ function expectDisplayAfterTyping(textToType: string, expected: string): void {
 }
 
 function renderTrainer() {
-    const typingTexts = [
-        'int main(void){printf("hello world");return 0;}',
-        "foo bar",
-    ];
+    const typingTexts = ["ab1"];
 
     render(<Trainer typingTexts={typingTexts} />);
 }
