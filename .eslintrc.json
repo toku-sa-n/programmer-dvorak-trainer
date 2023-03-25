@@ -20,6 +20,20 @@
             {
                 "functions": false
             }
+        ],
+        "padding-line-between-statements": "off",
+        "@typescript-eslint/padding-line-between-statements": [
+            "error",
+            {
+                "blankLine": "always",
+                "prev": ["block", "block-like"],
+                "next": "*"
+            },
+            {
+                "blankLine": "always",
+                "prev": "*",
+                "next": ["block", "block-like"]
+            }
         ]
     }
 }
