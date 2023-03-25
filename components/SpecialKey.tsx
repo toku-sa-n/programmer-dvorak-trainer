@@ -69,9 +69,8 @@ function label({ name }: SpecialKeyProps) {
 
 function additionalStyles({ name }: SpecialKeyProps) {
     switch (name) {
-        case "backslash": {
+        case "backslash":
             return styles.backslash;
-        }
         case "capslock":
             return styles.capslock;
         case "command":
@@ -80,15 +79,12 @@ function additionalStyles({ name }: SpecialKeyProps) {
             return styles.delete;
         case "leftctrl":
             return styles.leftctrl;
-            break;
-        case "leftshift": {
+        case "leftshift":
             return styles.leftshift;
-        }
         case "return":
             return styles.return;
         case "rightshift":
             return styles.rightshift;
-
         case "space":
             return styles.space;
         case "tab":
