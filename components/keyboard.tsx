@@ -12,7 +12,6 @@ import SingleRowKey from "./SingleRowKey";
 import SpecialKey from "./SpecialKey";
 import styles from "./keyboard.module.css";
 
-// The license for the HTML code representing the keyboard is at `/licenses/keyboard`.
 export default function Keyboard({ next }: { next: string }) {
     // TODO: Is it okay to call this here?
     enableMapSet();
