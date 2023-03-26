@@ -7,7 +7,7 @@
 
 const c = [
     'int main(void){printf("hello world");return 0;}',
-    'printf("%d\n",calculate());',
+    'printf("%d\\n",calculate());',
     'scanf("%d %d",&x,&y);',
 ];
 
