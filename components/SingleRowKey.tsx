@@ -1,6 +1,7 @@
 import styles from "./keyboard.module.css";
 
 type SingleRowKeyProps = {
+    readonly code: string | null;
     readonly char: string;
     // A workaround for false-positive.
     // eslint-disable-next-line react/no-unused-prop-types
@@ -12,10 +13,10 @@ type SingleRowKeyProps = {
 };
 
 export default function SingleRowKey(props: SingleRowKeyProps) {
-    const { char } = props;
+    const { char, code } = props;
 
     return (
-        <div className={classes(props)}>
+        <div data-testid={code} className={classes(props)}>
             <div className={styles["key-label"]}>{char}</div>
         </div>
     );

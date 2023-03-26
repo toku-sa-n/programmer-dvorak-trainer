@@ -1,6 +1,7 @@
 import styles from "./keyboard.module.css";
 
 type DoubleRowsKeyProps = {
+    readonly code: string;
     readonly upper: string;
     readonly lower: string;
     // A workaround for false-positive.
@@ -11,10 +12,10 @@ type DoubleRowsKeyProps = {
 };
 
 export default function DoubleRowsKey(props: DoubleRowsKeyProps) {
-    const { upper, lower } = props;
+    const { code, upper, lower } = props;
 
     return (
-        <div className={classes(props)}>
+        <div data-testid={code} className={classes(props)}>
             <div className={styles["key-label"]}>
                 {upper}
                 <br />

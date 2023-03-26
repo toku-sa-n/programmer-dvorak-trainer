@@ -52,6 +52,7 @@ export default function Keyboard({ next }: { next: string }) {
                 return (
                     <SingleRowKey
                         key={x.code}
+                        code={x.code}
                         pressed={pressedKeys.has(x.code)}
                         // `next` can be `undefined`. When the program starts
                         // and before the first `useEffect` is executed, `next
@@ -66,6 +67,7 @@ export default function Keyboard({ next }: { next: string }) {
                 return (
                     <DoubleRowsKey
                         key={x.code}
+                        code={x.code}
                         upper={x.upper}
                         lower={x.lower}
                         isNextKey={next !== undefined && isNextKey(x, next)}
@@ -76,6 +78,7 @@ export default function Keyboard({ next }: { next: string }) {
                 return (
                     <SpecialKey
                         key={x.code}
+                        code={x.code}
                         name={x.name}
                         pressed={pressedKeys.has(x.code)}
                         isNextKey={next !== undefined && isNextKey(x, next)}

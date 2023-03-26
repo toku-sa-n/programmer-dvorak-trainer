@@ -3,6 +3,7 @@ import SpecialKeyName from "../libs/SpecialKeyName";
 import styles from "./keyboard.module.css";
 
 type SpecialKeyProps = {
+    readonly code: string;
     // A workaround for false-positive.
     // eslint-disable-next-line react/no-unused-prop-types
     readonly name: SpecialKeyName;
@@ -13,8 +14,10 @@ type SpecialKeyProps = {
 };
 
 export default function SpecialKey(props: SpecialKeyProps) {
+    const { code } = props;
+
     return (
-        <div className={classes(props).join(" ")}>
+        <div data-testid={code} className={classes(props).join(" ")}>
             <div className={styles["key-label"]}>{label(props)}</div>
         </div>
     );

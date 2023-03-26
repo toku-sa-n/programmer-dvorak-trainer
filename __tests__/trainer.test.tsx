@@ -13,7 +13,7 @@ import escapeSpace from "../libs/escapeSpace";
 test("The next key is highlighted", () => {
     render(<Trainer typingTexts={["ab1"]} />);
 
-    expectKeyIsHighlighted("A");
+    expectKeyIsHighlighted("KeyA");
 });
 
 describe("On typing the correct key", () => {
@@ -27,7 +27,7 @@ describe("On typing the correct key", () => {
 
             userEvent.keyboard("a");
 
-            expectKeyIsHighlighted("B");
+            expectKeyIsHighlighted("KeyN");
         });
     });
 
@@ -56,11 +56,8 @@ test("Shift keys are highlighted if the next key is a number", () => {
 
     expect(nextKey.parentElement?.classList).toContain("next");
 
-    const shiftKeys = screen.getAllByText("Shift");
-
-    shiftKeys.forEach((key) => {
-        expect(key.parentElement?.classList).toContain("next");
-    });
+    expectKeyIsHighlighted("ShiftLeft");
+    expectKeyIsHighlighted("ShiftRight");
 });
 
 describe("On typing the wrong key", () => {
@@ -73,14 +70,25 @@ describe("On typing the wrong key", () => {
 
         userEvent.keyboard("b");
 
-        expectKeyIsHighlighted("A");
+        expectKeyIsHighlighted("KeyA");
     });
 });
 
-function expectKeyIsHighlighted(text: string): void {
-    const key = screen.getByText(text);
+// There are problems with the use of key codes The keycodes are based on the
+// QWERTY layout, and most of the keycodes do not match the actual keys in the
+// Dvorak layout (e.g., the keycode for the "B" key is `KeyN`), making the test
+// code less readable.
+//
+// However, `getByText` cannot be used because the text of the key label is too
+// short, causing other parts to be subject to `getByText`, or in case of a key
+// with a two-rows display, the key cannot be selected correctly because it
+// contains a `<br />`. On the other hand, key codes are unique, and therefore,
+// keys can be selected correctly. Therefore, we use key codes instead of key
+// labels.
+function expectKeyIsHighlighted(code: string): void {
+    const key = screen.getByTestId(code);
 
-    expect(key.parentElement?.classList).toContain("next");
+    expect(key.classList).toContain("next");
 }
 
 function expectDisplayAfterTyping(textToType: string, expected: string): void {
