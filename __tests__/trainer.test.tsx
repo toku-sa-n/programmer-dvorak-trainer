@@ -56,8 +56,7 @@ test("Shift keys are highlighted if the next key is a number", () => {
 
     expect(nextKey.parentElement?.classList).toContain("next");
 
-    expectKeyIsHighlighted("ShiftLeft");
-    expectKeyIsHighlighted("ShiftRight");
+    expectShiftKeysAreHighlighted();
 });
 
 test("Shift keys are highlighted if the next character is on the upper row of a key", () => {
@@ -65,8 +64,7 @@ test("Shift keys are highlighted if the next character is on the upper row of a 
 
     expectKeyIsHighlighted("Backslash");
 
-    expectKeyIsHighlighted("ShiftLeft");
-    expectKeyIsHighlighted("ShiftRight");
+    expectShiftKeysAreHighlighted();
 });
 
 describe("On typing the wrong key", () => {
@@ -82,6 +80,11 @@ describe("On typing the wrong key", () => {
         expectKeyIsHighlighted("KeyA");
     });
 });
+
+function expectShiftKeysAreHighlighted() {
+    expectKeyIsHighlighted("ShiftLeft");
+    expectKeyIsHighlighted("ShiftRight");
+}
 
 // There are problems with the use of key codes The keycodes are based on the
 // QWERTY layout, and most of the keycodes do not match the actual keys in the
