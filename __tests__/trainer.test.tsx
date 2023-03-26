@@ -60,6 +60,15 @@ test("Shift keys are highlighted if the next key is a number", () => {
     expectKeyIsHighlighted("ShiftRight");
 });
 
+test("Shift keys are highlighted if the next character is on the upper row of a key", () => {
+    render(<Trainer typingTexts={["|"]} />);
+
+    expectKeyIsHighlighted("Backslash");
+
+    expectKeyIsHighlighted("ShiftLeft");
+    expectKeyIsHighlighted("ShiftRight");
+});
+
 describe("On typing the wrong key", () => {
     test("It does not shift the text", () => {
         expectDisplayAfterTyping("b", "ab1");

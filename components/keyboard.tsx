@@ -114,7 +114,7 @@ function isNextKey(key: KeyDefinition, nextKey: string): boolean {
 function isNextSpecialKey(key: SpecialKeyDefinition, nextKey: string): boolean {
     switch (key.name) {
         case "backslash":
-            return nextKey === "\\";
+            return nextKey === "\\" || nextKey === "|";
         case "space":
             return nextKey === " ";
         case "leftshift":
@@ -131,8 +131,9 @@ function isShiftKeyNeeded(c: string): boolean {
     }
 
     const isUpperKey =
-        keys.find((x) => x.type === "DoubleRowsKey" && x.upper === c) !==
-        undefined;
+        keys.find(
+            (x) => (x.type === "DoubleRowsKey" && x.upper === c) || c === "|"
+        ) !== undefined;
 
     const isUpperCase = isAlphabet(c) && c === c.toUpperCase();
 
