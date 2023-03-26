@@ -76,7 +76,8 @@ describe("On typing the wrong key", () => {
 
 // There are problems with the use of key codes The keycodes are based on the
 // QWERTY layout, and most of the keycodes do not match the actual keys in the
-// Dvorak layout (e.g., the keycode for the "B" key is `KeyN`).
+// Dvorak layout (e.g., the keycode for the "B" key is `KeyN`), making the test
+// code less readable.
 //
 // However, `getByText` cannot be used because the text of the key label is too
 // short, causing other parts to be subject to `getByText`, or in case of a key
