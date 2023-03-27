@@ -9,6 +9,8 @@ const c = [
     'int main(void){printf("hello world");return 0;}',
     'printf("%d\\n",calculate());',
     'scanf("%d %d",&x,&y);',
+    "bool success=false;while(!success){success=try();}",
+    "int cmp(int a,int b){return a>b?1:-1;}",
 ];
 
 const html = [
@@ -17,7 +19,14 @@ const html = [
     "<!DOCTYPE HTML>",
 ];
 
-const javascript = ['window.addEventListener("keydown",onKeyDown);'];
+const javascript = [
+    'window.addEventListener("keydown",onKeyDown);',
+    "const javascript='JavaScript';",
+    "const list=[1,2,3,4,5,6,7,8,9,0]",
+    // eslint-disable-next-line no-template-curly-in-string
+    "const message=`Hello, ${name}!`;",
+    '/^"[^"]+"/',
+];
 
 const haskell = [
     "{-#LANGUAGE OverloadedStrings#-}",
@@ -26,11 +35,17 @@ const haskell = [
     "filter::(a->Bool)->[a]->[a]",
     'main=putStrLn "hello world"',
     "data Foo=Foo{bar::Int,baz::Int}deriving(Eq,Ord)",
+    "foo _@(_:_)=undefined",
 ];
 
-const shell = ["alias emacs=vim", "sort -nr|uniq -c"];
+const shell = ["alias emacs=vim", "sort -nr|uniq -c", "mkdir ~/work"];
 
-const numbers = ["e=2.7182818284", "pi=3.1415926535", "root2=1.41421356237"];
+const numbers = [
+    "e=2.7182818284",
+    "pi=3.1415926535",
+    "root2=1.41421356237",
+    "0+1-2*3/4+5-6*7/8+9",
+];
 
 const typingTexts = [
     ...c,
